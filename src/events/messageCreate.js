@@ -1,4 +1,4 @@
-import { addMoney, addXp, canLevelUp, canPrestige, hasProfile, initProfile, levelUp, prestige } from '../database/functions.js';
+import { addMoney, addXp, canLevelUp, canPrestige, getProfile, hasProfile, initProfile, levelUp, prestige } from '../database/functions.js';
 import { random } from '../modules/functions.js';
 
 const cooldown = new Set();
@@ -25,6 +25,14 @@ export default {
 			setTimeout(() => cooldown.delete(key), 1000 * 10);
 		}
 
-		if ((await canLevelUp(key)).hasEnoughXp) await levelUp(key);
+		if ((await canLevelUp(key)).hasEnoughXp) {
+			await levelUp(key);
+			message.reply({
+				content: `You have leveled up to level ${(await getProfile(key)).level}!`,
+				allowedMentions: {
+					repliedUser: false
+				}
+			});
+		}
 	}
 };
