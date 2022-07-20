@@ -1,4 +1,4 @@
-import { addMoney, addXp, canLevelUp, canPrestige, levelUp, prestige } from '../database/functions.js';
+import { addMoney, addXp, canLevelUp, canPrestige, hasProfile, initProfile, levelUp, prestige } from '../database/functions.js';
 import { random } from '../modules/functions.js';
 
 const cooldown = new Set();
@@ -17,6 +17,7 @@ export default {
 
 		const key = message.author.id;
 
+		if (!(await hasProfile(key))) await initProfile(key);
 		if (!cooldown.has(key)) {
 			await addXp(key, random(10, 25) * globalBoosters.xp);
 			await addMoney(key, random(25, 50) * globalBoosters.money);
