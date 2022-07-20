@@ -42,7 +42,8 @@ export async function getUsers(id) {
 		users.push({
 			tag,
 			prestige: profile.prestige,
-			level: profile.level
+			level: profile.level,
+			xp: profile.xp
 		});
 	}
 
