@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import prettyMilliseconds from 'pretty-ms';
 
 export default {
-	devCmd: true,
+	devCmd: false,
 	permLevel: 0,
 	data: new SlashCommandBuilder().setName('ping').setDescription('Checks bot ping.').toJSON(),
 	async execute(interaction) {

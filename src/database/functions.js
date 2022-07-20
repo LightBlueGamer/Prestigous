@@ -6,6 +6,7 @@ export async function initProfile(key) {
 		inventory: [],
 		prestige: 0,
 		level: 1,
+		xp: 0,
 		money: 0,
 		pCoins: 0,
 		joined: new Date(),
@@ -54,7 +55,7 @@ export async function getLeaders(page, users) {
 		.map((v, i) => [
 			{
 				name: `#${i + 1} ${v.tag}`,
-				value: `Prestige: ${v.prestige}\nLevel: ${v.level}`,
+				value: `Prestige: ${v.prestige}\nLevel: ${v.level}\nExperience: ${v.experience}`,
 				inline: true
 			},
 			i % 2
@@ -69,4 +70,35 @@ export async function getLeaders(page, users) {
 		.filter(Boolean);
 
 	return { fields, sorted };
+}
+
+export async function addXp(key, amount) {
+	return await profiles.math(`${key}.xp`, '+', amount);
+}
+
+export async function addMoney(key, amount) {
+	return await profiles.math(`${key}.money`, '+', amount);
+}
+
+export async function canLevelUp(key) {
+	const level = (await getProfile(key)).level;
+	const xpNeeded = level * 500;
+	const xpNext = xpNeeded - (await getProfile(key)).xp;
+	const hasEnoughXp = xpNext <= 0 && level <= 100;
+	return { hasEnoughXp, xpNext };
+}
+
+export async function levelUp(key) {
+	await profiles.set(`${key}.xp`, 0);
+	return await profiles.inc(`${key}.level`);
+}
+
+export async function canPrestige(key) {
+	const level = (await getProfile(key)).level;
+	return level === 100;
+}
+
+export async function prestige(key) {
+	await profile.set(`${key}.level`, 0);
+	return await profiles.inc(`${key}.prestige`);
 }

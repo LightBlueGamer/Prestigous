@@ -2,7 +2,7 @@ import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getLeaders, getUsers } from '../database/functions.js';
 
 export default {
-	devCmd: true,
+	devCmd: false,
 	permLevel: 0,
 	data: new SlashCommandBuilder()
 		.setName('leaderboard')

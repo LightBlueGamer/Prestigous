@@ -2,7 +2,7 @@ import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { getProfile } from '../database/functions.js';
 
 export default {
-	devCmd: true,
+	devCmd: false,
 	permLevel: 0,
 	data: new SlashCommandBuilder()
 		.setName('profile')
@@ -22,8 +22,8 @@ export default {
 			)
 			.addFields([
 				{ name: 'Prestige', value: `${profile.prestige}`, inline: true },
-				{ name: '\u200b', value: `\u200b`, inline: true },
 				{ name: 'Level', value: `${profile.level}`, inline: true },
+				{ name: 'Experience', value: `${profile.xp}`, inline: true },
 				{ name: 'Money', value: `${profile.money}`, inline: true },
 				{ name: '\u200b', value: `\u200b`, inline: true },
 				{ name: 'Prestigious Coins', value: `${profile.pCoins}`, inline: true }
