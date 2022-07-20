@@ -55,7 +55,7 @@ export async function getLeaders(page, users) {
 		.map((v, i) => [
 			{
 				name: `#${i + 1} ${v.tag}`,
-				value: `Prestige: ${v.prestige}\nLevel: ${v.level}\nExperience: ${v.experience}`,
+				value: `Prestige: ${v.prestige}\nLevel: ${v.level}\nExperience: ${v.xp}`,
 				inline: true
 			},
 			i % 2
