@@ -12,7 +12,7 @@ export default {
 	async execute(interaction) {
 		const user = interaction.options.getUser('user') || interaction.user;
 		const profile = await getProfile(user.id);
-		const joined = Math.round(profile.joined / 1000);
+		const joined = Math.round(profile.joined.getTime() / 1000);
 		const embed = new EmbedBuilder()
 			.setTitle(user.tag)
 			.setDescription(

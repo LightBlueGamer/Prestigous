@@ -6,16 +6,17 @@ import { config } from '../config.js';
 const { guildId } = config;
 
 import 'dotenv/config';
-const token = process.env.DISCORD_TOKEN;
-const clientId = process.env.CLIENT_ID;
+const token: string = process.env.DISCORD_TOKEN!;
+const clientId: string = process.env!.CLIENT_ID!;
 
 import { commandFiles } from './index.js';
+import { Command } from './game/classes/Command.js';
 
-const commands = [];
-const development = [];
+const commands: Command.Data[] = [];
+const development: Command.Data[] = [];
 
 for (const file of commandFiles) {
-	const command = (await import(`./commands/${file}`)).default;
+	const command: Command = (await import(`./commands/${file}`)).default;
 	if (command.devCmd) development.push(command.data);
 	else commands.push(command.data);
 }

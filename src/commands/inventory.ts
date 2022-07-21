@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, EmbedField } from 'discord.js';
 import { getInventory } from '../database/functions.js';
 import { sortRarity } from '../modules/functions.js';
 
@@ -22,7 +22,7 @@ export default {
 		const sorted = sortRarity(items);
 		const spliced = sorted.slice(pageIdx * 25, pageIdx * 25 + 25);
 
-		const fields = [];
+		const fields: EmbedField[] = [];
 
 		let username = user.username;
 		const embed = new EmbedBuilder().setTitle(`${username.endsWith('s') ? (username += "'") : (username += "'s")}`);

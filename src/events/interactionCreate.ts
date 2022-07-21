@@ -2,11 +2,12 @@ import { permlevel } from '../modules/functions.js';
 import { commands } from '../index.js';
 import { hasProfile, initProfile } from '../database/functions.js';
 import { InteractionType } from 'discord.js';
+import { Command } from '../game/classes/Command.js';
 
 export default {
 	name: 'interactionCreate',
 	once: false,
-	async execute(interaction) {
+	async execute(interaction: { type: InteractionType; user: any; commandName: string; reply: (arg0: { content: string; ephemeral: boolean; }) => any; inGuild: () => any; }) {
 		if (interaction.type === InteractionType.MessageComponent) return;
 
 		const user = interaction.user;
@@ -15,7 +16,7 @@ export default {
 
 		if (!(await hasProfile(user.id))) await initProfile(user.id);
 
-		const command = commands.get(interaction.commandName);
+		const command: Command | undefined = commands.get(interaction.commandName);
 		if (!command) return;
 		const level = permlevel(interaction);
 		if (level < command.permLevel) {

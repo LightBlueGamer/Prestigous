@@ -2,9 +2,9 @@
   "name": "prestigious",
   "version": "2.0.0",
   "description": "A bot all about getting the highest level possible!",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "deploy": "node src/deploy.js"
+    "deploy": "node dist/deploy.js"
   },
   "author": "Tim",
   "license": "ISC",

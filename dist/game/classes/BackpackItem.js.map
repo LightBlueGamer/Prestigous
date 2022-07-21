@@ -1,0 +1,1 @@
+{"version":3,"file":"BackpackItem.js","sourceRoot":"","sources":["../../../src/game/classes/BackpackItem.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,WAAW,CAAC;AAGjC,MAAM,OAAO,YAAa,SAAQ,IAAI;IAClC,MAAM,CAAS;IACf,YAAY,IAAY,EAAE,MAAc,EAAE,WAAmB,EAAE,MAAc;QACzE,KAAK,CAAC,IAAI,EAAE,MAAM,EAAE,WAAW,CAAC,CAAC;QACjC,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACzB,CAAC;CACJ"}

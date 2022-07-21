@@ -1,8 +1,10 @@
 import { profiles } from './base.js';
 import { client } from '../index.js';
+import { Profile } from '../game/classes/Profile.js';
+import { User } from '../game/classes/User.js';
 
-export async function initProfile(key) {
-	return await profiles.set(key, {
+export async function initProfile(key: string) {
+	return profiles.set(key, {
 		inventory: [],
 		prestige: 0,
 		level: 1,
@@ -18,20 +20,20 @@ export async function initProfile(key) {
 	});
 }
 
-export async function getProfile(key) {
-	return await profiles.get(key);
+export async function getProfile(key: string): Promise<Profile> {
+	return profiles.get(key);
 }
 
-export async function hasProfile(key) {
-	return await profiles.has(key);
+export async function hasProfile(key: string) {
+	return profiles.has(key);
 }
 
-export async function getInventory(key) {
-	return await profiles.get(`${key}.inventory`);
+export async function getInventory(key: string): Promise<Profile.Inventory> {
+	return profiles.get(`${key}.inventory`);
 }
 
-export async function getUsers(id) {
-	const users = [];
+export async function getUsers(id: string) {
+	const users: User[] = [];
 	const keys = await profiles.keys;
 
 	for (const key of keys) {
@@ -40,7 +42,7 @@ export async function getUsers(id) {
 		const tag = user.id === id ? `${user.tag} (you)` : `${user.tag}`;
 
 		users.push({
-			tag,
+			tag: tag,
 			prestige: profile.prestige,
 			level: profile.level,
 			xp: profile.xp
@@ -50,8 +52,8 @@ export async function getUsers(id) {
 	return users;
 }
 
-export async function getLeaders(page, users) {
-	const sorted = users.sort((a, b) => b.prestige - a.prestige || b.level - a.level).slice((page - 1) * 10, (page - 1) * 10 + 10);
+export async function getLeaders(page: number, users: User[]) {
+	const sorted = users.sort((a, b) => b.prestige - a.prestige || b.level - a.level || b.xp - a.xp).slice((page - 1) * 10, (page - 1) * 10 + 10);
 	const fields = sorted
 		.map((v, i) => [
 			{
@@ -73,15 +75,15 @@ export async function getLeaders(page, users) {
 	return { fields, sorted };
 }
 
-export async function addXp(key, amount) {
-	return await profiles.math(`${key}.xp`, '+', amount);
+export async function addXp(key: string, amount: number) {
+	return profiles.math(`${key}.xp`, '+', amount);
 }
 
-export async function addMoney(key, amount) {
-	return await profiles.math(`${key}.money`, '+', amount);
+export async function addMoney(key: string, amount: number) {
+	return profiles.math(`${key}.money`, '+', amount);
 }
 
-export async function canLevelUp(key) {
+export async function canLevelUp(key: string) {
 	const level = (await getProfile(key)).level;
 	const xpNeeded = level * 500;
 	const xpNext = xpNeeded - (await getProfile(key)).xp;
@@ -89,17 +91,17 @@ export async function canLevelUp(key) {
 	return { hasEnoughXp, xpNext };
 }
 
-export async function levelUp(key) {
+export async function levelUp(key: string) {
 	await profiles.set(`${key}.xp`, 0);
-	return await profiles.inc(`${key}.level`);
+	return profiles.inc(`${key}.level`);
 }
 
-export async function canPrestige(key) {
+export async function canPrestige(key: string) {
 	const level = (await getProfile(key)).level;
 	return level === 100;
 }
 
-export async function prestige(key) {
-	await profile.set(`${key}.level`, 0);
-	return await profiles.inc(`${key}.prestige`);
+export async function prestige(key: string) {
+	await profiles.set(`${key}.level`, 0);
+	return profiles.inc(`${key}.prestige`);
 }

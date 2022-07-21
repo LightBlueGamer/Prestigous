@@ -36,15 +36,15 @@ export default {
 		const message = interaction.channel.messages.resolve(interaction.targetId);
 		const code = cleanInput(message.content);
 		try {
-			const evaled = eval('(async()=>{' + code + '})()');
-			const cleaned = await clean(interaction.client, evaled);
-			const MAX_CHARS = 3 + 2 + cleaned.length + 3;
-			if (MAX_CHARS > 4000) {
+			const evaled = eval('(async()=>{' + code + '})()'); 
+			const cleaned = await clean(interaction.client, evaled); 
+			const MAX_CHARS = 3 + 2 + cleaned.length + 3; 
+			if (MAX_CHARS > 4000) { 
 				await interaction.editReply('Output exceeded 4000 characters. Sending as a file.', {
 					files: [{ attachment: Buffer.from(cleaned), name: 'output.txt' }]
 				});
 			}
-			await interaction.editReply(codeBlock('js', cleaned));
+			await interaction.editReply(codeBlock('js', cleaned)); 
 		} catch (err) {
 			console.log(err);
 		}

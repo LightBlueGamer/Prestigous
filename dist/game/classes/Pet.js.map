@@ -1,0 +1,1 @@
+{"version":3,"file":"Pet.js","sourceRoot":"","sources":["../../../src/game/classes/Pet.ts"],"names":[],"mappings":"AAEA,MAAM,OAAO,GAAG;IACZ,IAAI,CAAS;IACb,MAAM,CAAS;IACf,YAAY,IAAY,EAAE,MAAc;QACpC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACzB,CAAC;CACJ"}
