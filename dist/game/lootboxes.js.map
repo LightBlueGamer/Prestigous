@@ -1,1 +1,0 @@
-{"version":3,"file":"lootboxes.js","sourceRoot":"","sources":["../../src/game/lootboxes.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,sBAAsB,CAAC;AAC/C,OAAO,EAAE,WAAW,EAAE,MAAM,iBAAiB,CAAC;AAC9C,OAAO,EAAE,IAAI,EAAE,MAAM,eAAe,CAAC;AAErC,MAAM,CAAC,MAAM,aAAa,GAAG,IAAI,OAAO,CAAC,cAAc,EAAE,IAAI,EAAE,WAAW,EAAE,IAAI,EAAE,qCAAqC,CAAC,CAAC"}
