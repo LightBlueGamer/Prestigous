@@ -1,4 +1,4 @@
-import type { Color } from "./Color.js";
+import type { Color } from './Color.js';
 export class Rarity {
     name: string;
     color: Color;

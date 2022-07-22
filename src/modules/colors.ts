@@ -5,4 +5,4 @@ export const veryRare = '#49f9e0';
 export const epic = '#5A20AA';
 export const legendary = '#ffff00';
 export const mythic = '#B100C3';
-export const artifact = '#8A764F'
+export const artifact = '#8A764F';

@@ -1,5 +1,5 @@
-import { LootTable } from "./Loottable.js";
-import { Rarity } from "./Rarity.js";
+import type { LootTable } from './LootTable.js';
+import type { Rarity } from './Rarity.js';
 
 export class Lootbox {
     name: string;

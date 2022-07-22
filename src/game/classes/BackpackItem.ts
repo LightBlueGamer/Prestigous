@@ -1,5 +1,5 @@
-import { Item } from "./Item.js";
-import { Rarity } from "./Rarity.js";
+import { Item } from './Item.js';
+import type { Rarity } from './Rarity.js';
 
 export class BackpackItem extends Item {
     amount: number;

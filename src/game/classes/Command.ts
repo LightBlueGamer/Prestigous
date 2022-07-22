@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder } from 'discord.js';
 
 export interface Command {
     devCmd: boolean;
     permLevel: number;
     data: Command.Data;
-    execute: Function
+    execute: Function;
 }
 
 export namespace Command {

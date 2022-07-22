@@ -1,4 +1,4 @@
-import { Rarity } from "./Rarity.js";
+import { Rarity } from './Rarity.js';
 
 export class Item {
     name: string;

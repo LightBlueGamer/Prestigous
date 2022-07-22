@@ -1,42 +1,36 @@
-import { SlashCommandBuilder, EmbedBuilder, EmbedField } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, EmbedField, CommandInteraction } from 'discord.js';
 import { getInventory } from '../database/functions.js';
 import { sortRarity } from '../modules/functions.js';
 
 export default {
-	devCmd: false,
-	permLevel: 0,
-	data: new SlashCommandBuilder()
-		.setName('inventory')
-		.setDescription('Checks your inventory.')
-		.addNumberOption((option) => option.setName('page').setDescription('Page to go to'))
-		.toJSON(),
-	async execute(interaction) {
-		const user = interaction.user;
-		const items = await getInventory(user.id);
-		console.log(items);
-		const pgNum = interaction.options.getNumber('page') || 1;
-		let page = !pgNum ? 1 : isNaN(pgNum) ? 1 : parseInt(pgNum);
-		if (page * 25 > items.length) page = Math.ceil(items.length / 25);
-		if (page <= 0) page = 1;
-		const pageIdx = page - 1;
-		const sorted = sortRarity(items);
-		const spliced = sorted.slice(pageIdx * 25, pageIdx * 25 + 25);
+    devCmd: false,
+    permLevel: 0,
+    data: new SlashCommandBuilder()
+        .setName('inventory')
+        .setDescription('Checks your inventory.')
+        .addNumberOption((option) => option.setName('page').setDescription('Page to go to').setRequired(true))
+        .toJSON(),
+    async execute(interaction: CommandInteraction) {
+        const { user } = interaction;
+        const items = await getInventory(user.id);
+        const sorted = sortRarity(items);
+        let page: number = parseInt(interaction.options.get('page')!.toString()) || 1;
+        if (page * 25 > items.length) page = Math.ceil(items.length / 25);
+        if (page <= 0) page = 1;
+        const fields: EmbedField[] = [];
+        let { username } = user;
+        const embed = new EmbedBuilder().setTitle(`${username.endsWith('s') ? (username += "'") : (username += "'s")}`);
+        if (items.length > 0) {
+            for (const item of sorted) {
+                fields.push({ name: `${item.amount}x ${item.name}`, value: `${item.description}`, inline: true });
+            }
 
-		const fields: EmbedField[] = [];
+            embed.setDescription(`Page ${page}/${Math.ceil(items.length / 25)}`);
+            embed.addFields(fields);
+        } else {
+            embed.setDescription(`You don't have any items.`);
+        }
 
-		let username = user.username;
-		const embed = new EmbedBuilder().setTitle(`${username.endsWith('s') ? (username += "'") : (username += "'s")}`);
-		if (items.length > 0) {
-			for (const item of items) {
-				fields.push({ name: `${item.amount}x ${item.name}`, value: `${item.description}`, inline: true });
-			}
-
-			embed.setDescription(`Page ${page}/${Math.ceil(items.length / 25)}`);
-			embed.addFields(fields);
-		} else {
-			embed.setDescription(`You don't have any items.`);
-		}
-
-		return interaction.reply({ embeds: [embed] });
-	}
+        return interaction.reply({ embeds: [embed] });
+    },
 };

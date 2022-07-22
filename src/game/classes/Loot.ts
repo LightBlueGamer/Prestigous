@@ -1,5 +1,5 @@
-import { Item } from "./Item.js";
-import { Rarity } from "./Rarity.js";
+import { Item } from './Item.js';
+import { Rarity } from './Rarity.js';
 
 export class Loot extends Item {
     weight: number;
