@@ -3,7 +3,7 @@ import { addItem, hasItem, removeItem } from '../database/functions.js';
 import * as lootboxes from '../game/lootboxes.js';
 
 export default {
-    devCmd: true,
+    devCmd: false,
     permLevel: 0,
     data: new SlashCommandBuilder()
     .setName('open')
