@@ -1,1 +1,0 @@
-{"version":3,"file":"Item.js","sourceRoot":"","sources":["../../../src/game/classes/Item.ts"],"names":[],"mappings":"AAEA,MAAM,OAAO,IAAI;IACb,IAAI,CAAS;IACb,MAAM,CAAS;IACf,WAAW,CAAS;IACpB,YAAY,IAAY,EAAE,MAAc,EAAE,WAAmB;QACzD,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,WAAW,GAAG,WAAW,CAAC;IACnC,CAAC;CACJ"}
