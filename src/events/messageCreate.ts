@@ -36,7 +36,7 @@ export default {
             });
         }
 
-        if (random(1, 100000)) {
+        if (random(1, 100000) <= 100000) {
             const { lootbox } = await import('../game/lootboxes');
             const lootboxItem = new Item(lootbox.name, lootbox.rarity, lootbox.description);
             await addItem(key, lootboxItem);

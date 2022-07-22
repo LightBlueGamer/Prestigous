@@ -2,7 +2,7 @@ import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import { readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { Command } from './game/classes/Command.js';
+import type { Command } from './game/classes/Command.js';
 
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);

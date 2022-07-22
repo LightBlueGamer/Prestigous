@@ -1,9 +1,9 @@
 import { config } from '../../config.js';
 import sortArray from 'sort-array';
-import type { Interaction, Message } from 'discord.js';
+import type { CommandInteraction, Message } from 'discord.js';
 import type { BackpackItem } from '../game/classes/BackpackItem.js';
 
-export function permlevel(interaction: Interaction | Message) {
+export function permlevel(interaction: CommandInteraction | Message) {
     let permlvl = 0;
     const permOrder = config.permLevels.slice(0).sort((p: { level: number }, c: { level: number }) => (p.level < c.level ? 1 : -1));
     while (permOrder.length) {

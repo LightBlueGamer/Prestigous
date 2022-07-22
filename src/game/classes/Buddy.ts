@@ -1,5 +1,4 @@
-import { Pet } from './Pet.js';
-import { Rarity } from './Rarity.js';
+import type { Pet } from './Pet.js';
 
 export class Buddy {
     pet: Pet;

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import type { SlashCommandBuilder } from 'discord.js';
 
 export interface Command {
     devCmd: boolean;

@@ -1,4 +1,4 @@
-import { BackpackItem } from './BackpackItem.js';
+import type { BackpackItem } from './BackpackItem.js';
 
 export interface Profile {
     inventory: Profile.Inventory;

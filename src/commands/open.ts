@@ -6,8 +6,8 @@ export default {
     devCmd: true,
     permLevel: 0,
     data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription('Checks bot ping.')
+    .setName('open')
+    .setDescription('Opens a lootbox')
     .addStringOption((option) => 
     option
     .setName('lootbox')
@@ -15,14 +15,14 @@ export default {
     .setRequired(true)
     .addChoices(
         { name: 'Lootbox', value: 'lootbox' },
-        { name: 'Animal Crate', value: 'animal' }
+        { name: 'Animal Crate', value: 'animalLootbox' }
     )
     )
     .toJSON(),
     async execute(interaction: CommandInteraction) {
         const { user } = interaction;
-        const toOpen = interaction.options.get("lootbox")!.toString();
-        const box = (Object.entries(lootboxes)).find((_v, i, o) => o[i][1].name === toOpen)?.[1]!;
+        const toOpen = interaction.options.get("lootbox")?.value;
+        const box = (Object.entries(lootboxes)).find((_v, i, o) => o[i][0] === toOpen)?.[1]!;
         const loot = box.loottable.getLoot();
         if(await hasItem(user.id, box)) await removeItem(user.id, box);
         else {

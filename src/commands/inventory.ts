@@ -8,13 +8,14 @@ export default {
     data: new SlashCommandBuilder()
         .setName('inventory')
         .setDescription('Checks your inventory.')
-        .addNumberOption((option) => option.setName('page').setDescription('Page to go to').setRequired(true))
+        .addNumberOption((option) => option.setName('page').setDescription('Page to go to'))
         .toJSON(),
     async execute(interaction: CommandInteraction) {
         const { user } = interaction;
         const items = await getInventory(user.id);
         const sorted = sortRarity(items);
-        let page: number = parseInt(interaction.options.get('page')!.toString()) || 1;
+        const pgNum = interaction.options.get('page')?.value;
+        let page = typeof pgNum === 'number' ? pgNum : 1;
         if (page * 25 > items.length) page = Math.ceil(items.length / 25);
         if (page <= 0) page = 1;
         const fields: EmbedField[] = [];

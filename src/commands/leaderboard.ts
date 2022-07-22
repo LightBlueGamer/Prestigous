@@ -7,14 +7,15 @@ export default {
     data: new SlashCommandBuilder()
         .setName('leaderboard')
         .setDescription('Checks the season leaderboard.')
-        .addNumberOption((option) => option.setName('page').setDescription('Page to go to').setRequired(true))
+        .addNumberOption((option) => option.setName('page').setDescription('Page to go to'))
         .toJSON(),
     async execute(interaction: CommandInteraction) {
+        await interaction.deferReply()
         const { user } = interaction;
         const users = await getUsers(user.id);
-        await interaction.deferReply();
-        let page = parseInt(interaction.options.get('page')!.toString() || '1') || 1;
-        if (page * 25 > users.length) page = Math.ceil(users.length / 25);
+        const pgNum = interaction.options.get('page')?.value;
+        let page = typeof pgNum === 'number' ? pgNum : 1;
+        if (page * 10 > users.length) page = Math.ceil(users.length / 10);
         if (page <= 0) page = 1;
 
         const { fields, sorted } = await getLeaders(page, users);

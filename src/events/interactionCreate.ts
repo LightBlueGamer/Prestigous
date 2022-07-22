@@ -1,14 +1,14 @@
 import { permlevel } from '../modules/functions.js';
 import { commands } from '../index.js';
 import { hasProfile, initProfile } from '../database/functions.js';
-import { InteractionType } from 'discord.js';
+import { CommandInteraction, InteractionType } from 'discord.js';
 import type { Command } from '../game/classes/Command.js';
 
 export default {
     name: 'interactionCreate',
     once: false,
-    async execute(interaction) {
-        if (interaction.type === InteractionType.MessageComponent) return;
+    async execute(interaction: CommandInteraction) {
+        if (interaction.type !== InteractionType.ApplicationCommand) return;
 
         const { user } = interaction;
 
@@ -33,7 +33,7 @@ export default {
         }
 
         try {
-            await command.execute(interaction);
+            return command.execute(interaction);
         } catch (error) {
             console.error(error);
             await interaction.reply({

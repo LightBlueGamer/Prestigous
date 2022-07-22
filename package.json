@@ -1,10 +1,10 @@
 {
   "name": "prestigious",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A bot all about getting the highest level possible!",
   "main": "dist/src/index.js",
   "scripts": {
-    "deploy": "node dist/src/deploy.js",
+    "deploy": "node --es-module-specifier-resolution=node dist/src/deploy.js",
     "lint": "eslint src --ext ts --fix",
     "format": "prettier --write src/",
     "run": "node --es-module-specifier-resolution=node ."

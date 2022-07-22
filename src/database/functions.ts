@@ -58,28 +58,31 @@ export async function getUsers(id: string) {
 }
 
 export async function getLeaders(page: number, users: User[]) {
-    const sorted = users.sort((a, b) => b.prestige - a.prestige || b.level - a.level || b.xp - a.xp).slice((page - 1) * 10, (page - 1) * 10 + 10);
-    const fields: APIEmbedField[] = sorted
-        .map((v, i) => [
-            {
-                name: `#${i + 1} ${v.tag}`,
-                value: `Prestige: ${v.prestige}\nLevel: ${v.level}\nExperience: ${v.xp}`,
+    const sorted = users.sort((a, b) => b.prestige - a.prestige || b.level - a.level || b.xp - a.xp)
+    const sliced = sorted.slice((page - 1) * 10, (page - 1) * 10 + 10);
+    const fields: APIEmbedField[] = [];
+    for(let i = 0; i < sliced.length; i++) {
+        const ind = sliced[i]
+        if(i % 2) {
+            fields.push({
+                name: `\u200b`,
+                value: `\u200b`,
                 inline: true,
-            },
-            i % 2
-                ? {
-                      name: '\u200b',
-                      value: '\u200b',
-                      inline: true,
-                  }
-                : {
-                      name: '\u200b',
-                      value: '\u200b',
-                      inline: true,
-                  },
-        ])
-        .flat()
-        .filter(Boolean);
+            });
+
+            fields.push({
+                name: `${sorted.indexOf(ind)+1}. ${ind.tag}`,
+                value: `Level: ${ind.level} Prestige: ${ind.prestige} XP: ${ind.xp}`,
+                inline: true,
+            });
+        } else {
+            fields.push({
+                name: `${sorted.indexOf(ind)+1}. ${ind.tag}`,
+                value: `Level: ${ind.level} Prestige: ${ind.prestige} XP: ${ind.xp}`,
+                inline: true,
+            });
+        }
+    }
 
     return { fields, sorted };
 }
@@ -131,7 +134,7 @@ export async function removeItem(key: string, item: Loot | BackpackItem | Lootbo
     const inventory = await getInventory(key);
     const invItem = inventory.find((i) => i.name === item.name)!;
     const itemIndex = inventory.indexOf(invItem);
-    if (invItem) {
+    if (invItem.amount > 1) {
         await profiles.dec(`${key}.inventory[${itemIndex}].amount`);
     } else {
         await profiles.remove(`${key}.inventory`, (itm: BackpackItem) => itm.name === item.name);
