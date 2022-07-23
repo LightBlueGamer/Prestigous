@@ -13,6 +13,7 @@ export interface Profile {
     buddy: Profile.Buddy;
     xpBoost: Date;
     moneyBoost: Date;
+    ping: boolean
 }
 
 export namespace Profile {

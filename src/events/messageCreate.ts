@@ -28,22 +28,24 @@ export default {
 
         if ((await canLevelUp(key)).hasEnoughXp) {
             await levelUp(key);
+            const ping = (await getProfile(key)).ping;
             message.reply({
                 content: `You have leveled up to level ${(await getProfile(key)).level}!`,
                 allowedMentions: {
-                    repliedUser: false,
+                    repliedUser: ping,
                 },
             });
         }
 
         if (random(1, 1000) === 1) {
             const { lootbox } = await import('../game/lootboxes');
-            const lootboxItem = new Item(lootbox.name, lootbox.rarity, lootbox.description);
+            const lootboxItem = new Item(lootbox.name, lootbox.rarity, lootbox.description, 'lootbox');
+            const ping = (await getProfile(key)).ping;
             await addItem(key, lootboxItem);
             message.reply({
                 content: `You just got a lootbox! you can open it with the /open command!`,
                 allowedMentions: {
-                    repliedUser: false,
+                    repliedUser: ping,
                 },
             });
         }

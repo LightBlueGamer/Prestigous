@@ -125,7 +125,7 @@ export async function addItem(key: string, item: Item) {
     if (invItem) {
         await profiles.inc(`${key}.inventory[${itemIndex}].amount`);
     } else {
-        const newItem = new BackpackItem(item.name, item.rarity, item.description, 1);
+        const newItem = new BackpackItem(item.name, item.rarity, item.description, item.type, 1);
         await profiles.push(`${key}.inventory`, newItem, false);
     }
 }
@@ -146,3 +146,8 @@ export async function hasItem(key: string, item: Loot | BackpackItem | Lootbox) 
     return inventory.some((v) => v.name === item.name)
 }
 
+export async function togglePing(key: string) {
+    const profile = await getProfile(key);
+    const curState = profile.ping;
+    return profiles.set(`${key}.ping`, !curState);
+}
