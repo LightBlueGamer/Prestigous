@@ -22,6 +22,7 @@ export async function initProfile(key: string) {
         buddy: {},
         xpBoost: new Date(),
         moneyBoost: new Date(),
+        ping: false,
     });
 }
 
