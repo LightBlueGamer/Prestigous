@@ -13,7 +13,9 @@ export const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers],
 });
 
-const poster = AutoPoster('topggtoken', client);
+import "dotenv/config";
+
+const poster = AutoPoster(process.env.TOPGG_TOKEN!, client);
 poster.on('posted', (stats) => {
     console.log(`Posted stats to Top.gg | ${stats.serverCount} servers`)
 })
