@@ -2,6 +2,9 @@ import { config } from '../../config.js';
 import sortArray from 'sort-array';
 import type { CommandInteraction, Message } from 'discord.js';
 import type { BackpackItem } from '../game/classes/BackpackItem.js';
+import { Item } from '../game/classes/Item.js';
+import { addItem, addMoney, addXp } from '../database/functions.js';
+import { client } from '../index.js';
 
 export function permlevel(interaction: CommandInteraction | Message) {
     let permlvl = 0;
@@ -27,4 +30,19 @@ export function sortRarity(arr: BackpackItem[]) {
 
 export function random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export async function voteReward(key: string, type: string) {
+    const { lootbox } = await import('../game/lootboxes');
+    const lootboxItem = new Item(lootbox.name, lootbox.rarity, lootbox.description, 'lootbox');
+    const xp = random(250, 1000);
+    const money = random(500, 1500);
+    if(type === 'upvote') {
+        await addItem(key, lootboxItem);
+        await addXp(key, xp);
+        await addMoney(key, money);
+    }
+
+    const user = await client.users.fetch(key);
+    user.send(`You have voted and received 1 lootbox and ${xp} xp and $${money} money!`);
 }
