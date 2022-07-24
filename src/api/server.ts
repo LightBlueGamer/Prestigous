@@ -6,7 +6,6 @@ import { voteReward } from "../modules/functions";
 const webhook = new Topgg.Webhook(process.env.GGAUTH)
 
 app.post("/dblwebhook", webhook.listener(async (vote) => {
-  console.log(`Webhook received!`);
   try {
     voteReward(vote.user, vote.type);
   } catch (error) {

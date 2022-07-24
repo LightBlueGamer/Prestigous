@@ -39,13 +39,10 @@ export async function voteReward(key: string, type: string) {
     const xp = random(250, 1000);
     const money = random(500, 1500);
     if(type === 'upvote') {
-        console.log(`${user.username} has upvoted!`);
         await addItem(key, lootboxItem);
         await addXp(key, xp);
         await addMoney(key, money);
     }
     
-    if(type === 'test') console.log('Vote reward test');
-
     user.send(`You have voted and received 1 lootbox and ${xp} xp and $${money} money!`);
 }
