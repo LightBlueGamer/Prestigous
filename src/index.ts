@@ -13,7 +13,10 @@ export const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers],
 });
 
-AutoPoster('topggtoken', client);
+const poster = AutoPoster('topggtoken', client);
+poster.on('posted', (stats) => {
+    console.log(`Posted stats to Top.gg | ${stats.serverCount} servers`)
+})
 
 const eventFiles = readdirSync(`${__dirname}/events`).filter((x) => x.endsWith('.js'));
 export const commandFiles = readdirSync(`${__dirname}/commands`).filter((x) => x.endsWith('js'));
