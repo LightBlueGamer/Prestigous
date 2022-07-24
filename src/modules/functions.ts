@@ -33,16 +33,19 @@ export function random(min: number, max: number) {
 }
 
 export async function voteReward(key: string, type: string) {
+    const user = await client.users.fetch(key);
     const { lootbox } = await import('../game/lootboxes');
     const lootboxItem = new Item(lootbox.name, lootbox.rarity, lootbox.description, 'lootbox');
     const xp = random(250, 1000);
     const money = random(500, 1500);
     if(type === 'upvote') {
+        console.log(`${user.username} has upvoted!`);
         await addItem(key, lootboxItem);
         await addXp(key, xp);
         await addMoney(key, money);
     }
+    
+    if(type === 'test') console.log('Vote reward test');
 
-    const user = await client.users.fetch(key);
     user.send(`You have voted and received 1 lootbox and ${xp} xp and $${money} money!`);
 }
