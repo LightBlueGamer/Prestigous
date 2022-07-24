@@ -8,6 +8,6 @@ app.post("/dblwebhook", webhook.listener(vote => {
   console.log(vote.user)
 }))
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log("Listening on port 8080")
 });
