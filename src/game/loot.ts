@@ -37,3 +37,6 @@ export const phoenixLoot = new Loot('Phoenix', mythic, 'A phoenix', 'pet', 10);
 export const wyvernLoot = new Loot('Wyvern', mythic, 'A wyvern', 'pet', 10);
 
 export const animalCrateLoot = new Loot('Animal Crate', veryRare, 'A crate containing a random animal', 'lootbox', 12500);
+
+export const dayExpBoost = new Loot('24h XP Boost', veryRare, 'Boosts your experience gain by 2x for 24 hours!', 'boost', 9000);
+export const dayMoneyBoost = new Loot('24h Money Boost', veryRare, 'Boosts your money gain by 2x for 24 hours!', 'boost', 10000);

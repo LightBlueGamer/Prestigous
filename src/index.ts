@@ -2,6 +2,8 @@ import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import { readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { AutoPoster } from 'topgg-autoposter';
+
 import type { Command } from './game/classes/Command.js';
 
 export const __filename = fileURLToPath(import.meta.url);
@@ -10,6 +12,8 @@ export const __dirname = dirname(__filename);
 export const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers],
 });
+
+AutoPoster('topggtoken', client);
 
 const eventFiles = readdirSync(`${__dirname}/events`).filter((x) => x.endsWith('.js'));
 export const commandFiles = readdirSync(`${__dirname}/commands`).filter((x) => x.endsWith('js'));
