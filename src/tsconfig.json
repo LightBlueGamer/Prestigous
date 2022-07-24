@@ -6,14 +6,12 @@
         "target": "esnext",
         "module": "esnext",
         "sourceMap": true,
-        "outDir": "./dist",
+        "outDir": "../dist",
         "moduleResolution": "node",
-        "allowJs": true
+        "allowJs": true,
+        "skipLibCheck": true
     },
     "include": [
-        "src/"
-    ],
-    "exclude": [
-        "node_modules/"
+        "."
     ]
 }

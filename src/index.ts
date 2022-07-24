@@ -36,5 +36,6 @@ export const commands = new Collection<Command.Name, Command>();
     console.log(`All events successfully loaded.`);
 })();
 
-import 'dotenv/config';
+import './api/server';
+
 client.login(process.env.DISCORD_TOKEN);
