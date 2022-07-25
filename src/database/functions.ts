@@ -7,6 +7,8 @@ import { BackpackItem } from '../game/classes/BackpackItem.js';
 import type { APIEmbedField } from 'discord.js';
 import type { Loot } from '../game/classes/Loot.js';
 import type { Lootbox } from '../game/classes/Lootbox.js';
+import type { Booster } from '../game/classes/Booster.js';
+import * as boosters from '../game/boosters.js';
 
 export async function initProfile(key: string) {
     return profiles.set(key, {
@@ -126,7 +128,7 @@ export async function addItem(key: string, item: Item) {
     if (invItem) {
         await profiles.inc(`${key}.inventory[${itemIndex}].amount`);
     } else {
-        const newItem = new BackpackItem(item.name, item.rarity, item.description, item.type, 1);
+        const newItem = new BackpackItem(item.name, item.rarity, item.description, 1, item.type);
         await profiles.push(`${key}.inventory`, newItem, false);
     }
 }
@@ -142,13 +144,102 @@ export async function removeItem(key: string, item: Loot | BackpackItem | Lootbo
     }
 }
 
-export async function hasItem(key: string, item: Loot | BackpackItem | Lootbox) {
+export async function hasItem(key: string, item: string | Loot | BackpackItem | Lootbox) {
     const inventory = await getInventory(key);
-    return inventory.some((v) => v.name === item.name)
+    return inventory.some((v) => v.name === item)
+}
+
+export async function getItem(key: string, item: string | Loot | BackpackItem | Lootbox) {
+    const inventory = await getInventory(key);
+    return inventory.find((v) => v.name === item)!
 }
 
 export async function togglePing(key: string) {
     const profile = await getProfile(key);
     const curState = profile.ping;
     return profiles.set(`${key}.ping`, !curState);
+}
+
+export async function addBooster(key: string, booster: Booster) {
+    const profile = await getProfile(key);
+    const xpDate = profile.xpBoost.getTime();
+    const moneyDate = profile.moneyBoost.getTime();
+    let string;
+
+    switch (await hasBooster(key, booster.type)) {
+        case true:
+            switch (booster.type) {
+                case 'exp':
+                    await profiles.set(`${key}.xpBoost`, new Date(new Date(xpDate).setDate(profile.xpBoost.getDate() + booster.days)));
+                    string = `XP booster extended for ${booster.days * 24} hours!`;
+                    break;
+
+                case 'money':
+                    await profiles.set(`${key}.moneyBoost`, new Date(new Date(moneyDate).setDate(profile.moneyBoost.getDate() + booster.days)));
+                    string = `Money booster extended for ${booster.days * 24} hours!`;
+                    break;
+            
+                default:
+                    string = 'Invalid booster type!';
+                    break;
+            }
+
+            break;
+            
+        default:
+            switch (booster.type) {
+                case 'exp':
+                    await profiles.set(`${key}.xpBoost`, new Date(new Date().setDate(new Date().getDate() + booster.days)));
+                    string = `XP booster activated for ${booster.days * 24} hours!`;
+                    break;
+
+                case 'money':
+                    await profiles.set(`${key}.moneyBoost`, new Date(new Date().setDate(new Date().getDate() + booster.days)));
+                    string = `Money booster activated for ${booster.days * 24} hours!`;
+                    break;
+                
+                default:
+                    string = 'Invalid booster type!';
+                    break;
+            }
+
+            break;
+    }
+
+    return string;
+}
+
+export async function hasBooster(key: string, type: string) {    
+    const profile = await getProfile(key);
+    const xpDate = profile.xpBoost.getTime();
+    const moneyDate = profile.moneyBoost.getTime();
+
+    if (type === 'exp') {
+        return xpDate > new Date().getTime();
+    } else if (type === 'money') {
+        return moneyDate > new Date().getTime();
+    } else {
+        return false;
+    }
+}
+
+export async function getBooster(name: string) {
+    return (Object.entries(boosters)).find((_v, i, o) => o[i][1].name === name)?.[1]!;
+} 
+
+export async function useItem(key: string, item: BackpackItem) {
+    let string;
+    switch (item.type) {
+        case 'booster':
+            const booster = await getBooster(item.name);
+            string = await addBooster(key, booster);
+            break;
+    
+        default:
+            string = 'This item has no use yet!';
+            break;
+    }
+
+    return string;
+    
 }

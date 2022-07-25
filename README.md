@@ -2,6 +2,15 @@
 
 ## Release Notes
 
+### 2.4.0
+
+-   Added 24 hour 2x XP boost
+-   Added 7 day 2x XP boost
+-   Added 24 hour 2x money boost
+-   Added 7 day 2x money boost
+-   Added /use command which uses autocomplete
+-   Changed the /open command to use autocomplete to only show items you have
+
 ### 2.3.0
 
 -   You can now vote on Top.GG to get a lootbox!

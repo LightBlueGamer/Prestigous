@@ -13,10 +13,7 @@ export default {
     .setName('lootbox')
     .setDescription('The lootbox to open.')
     .setRequired(true)
-    .addChoices(
-        { name: 'Lootbox', value: 'lootbox' },
-        { name: 'Animal Crate', value: 'animalLootbox' }
-    )
+    .setAutocomplete(true)
     )
     .toJSON(),
     async execute(interaction: CommandInteraction) {

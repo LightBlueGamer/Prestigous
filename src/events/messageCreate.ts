@@ -1,5 +1,5 @@
 import type { Message } from 'discord.js';
-import { addItem, addMoney, addXp, canLevelUp, getProfile, hasProfile, initProfile, levelUp } from '../database/functions.js';
+import { addItem, addMoney, addXp, canLevelUp, getProfile, hasBooster, hasProfile, initProfile, levelUp } from '../database/functions.js';
 import { Item } from '../game/classes/Item.js';
 import { random } from '../modules/functions.js';
 
@@ -20,8 +20,10 @@ export default {
 
         if (!(await hasProfile(key))) await initProfile(key);
         if (!cooldown.has(key)) {
-            await addXp(key, random(10, 25) * globalBoosters.xp);
-            await addMoney(key, random(25, 50) * globalBoosters.money);
+            const xpBoost = await hasBooster(key, 'exp') ? 2 : 1;
+            const moneyBoost = await hasBooster(key, 'money') ? 2 : 1;
+            await addXp(key, random(10, 25) * globalBoosters.xp * xpBoost);
+            await addMoney(key, random(25, 50) * globalBoosters.money * moneyBoost);
             cooldown.add(key);
             setTimeout(() => cooldown.delete(key), 1000 * 10);
         }
