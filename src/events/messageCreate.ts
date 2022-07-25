@@ -13,6 +13,7 @@ export default {
     name: 'messageCreate',
     once: false,
     async execute(message: Message) {
+        console.log('test')
         if (message.author.bot) return;
         if (!message.guild) return;
 
