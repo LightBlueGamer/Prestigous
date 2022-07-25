@@ -91,12 +91,10 @@ export async function getLeaders(page: number, users: User[]) {
 }
 
 export async function addXp(key: string, amount: number) {
-    console.log(amount);
     return profiles.math(`${key}.xp`, '+', amount);
 }
 
 export async function addMoney(key: string, amount: number) {
-    console.log(amount);
     return profiles.math(`${key}.money`, '+', amount);
 }
 

@@ -13,14 +13,12 @@ export default {
     name: 'messageCreate',
     once: false,
     async execute(message: Message) {
-        console.log('test')
         if (message.author.bot) return;
         if (!message.guild) return;
 
         const key = message.author.id;
 
         if (!(await hasProfile(key))) await initProfile(key);
-        console.log(cooldown)
         if (!cooldown.has(key)) {
             const xpBoost = await hasBooster(key, 'exp') ? 2 : 1;
             const moneyBoost = await hasBooster(key, 'money') ? 2 : 1;
