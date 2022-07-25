@@ -19,6 +19,7 @@ export default {
         const key = message.author.id;
 
         if (!(await hasProfile(key))) await initProfile(key);
+        console.log(cooldown)
         if (!cooldown.has(key)) {
             const xpBoost = await hasBooster(key, 'exp') ? 2 : 1;
             const moneyBoost = await hasBooster(key, 'money') ? 2 : 1;
