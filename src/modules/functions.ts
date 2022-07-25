@@ -22,8 +22,13 @@ export function permlevel(interaction: CommandInteraction | Message) {
 
 export function sortRarity(arr: BackpackItem[]) {
     return sortArray(arr, {
+        by: 'comp',
+        order: 'rarity',
         customOrders: {
             rarity: ['Artifact', 'Mythic', 'Legendary', 'Epic', 'Very Rare', 'Rare', 'Uncommon', 'Common'],
+        },
+        computed: {
+            comp: (row) => row.rarity.name,
         },
     });
 }
@@ -43,6 +48,6 @@ export async function voteReward(key: string, type: string) {
         await addXp(key, xp);
         await addMoney(key, money);
     }
-    
+
     user.send(`You have voted and received 1 lootbox and ${xp} xp and $${money} money!`);
 }

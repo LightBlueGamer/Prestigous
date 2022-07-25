@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder, EmbedField, CommandInteraction } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from 'discord.js';
 import { getInventory } from '../database/functions.js';
 import { sortRarity } from '../modules/functions.js';
 
@@ -18,19 +18,12 @@ export default {
         let page = typeof pgNum === 'number' ? pgNum : 1;
         if (page * 25 > items.length) page = Math.ceil(items.length / 25);
         if (page <= 0) page = 1;
-        const fields: EmbedField[] = [];
+        const sliced = sorted.slice((page - 1) * 25, (page - 1) * 25 + 25);
         let { username } = user;
-        const embed = new EmbedBuilder().setTitle(`${username.endsWith('s') ? (username += "'") : (username += "'s")}`);
-        if (items.length > 0) {
-            for (const item of sorted) {
-                fields.push({ name: `${item.amount}x ${item.name}`, value: `${item.description}`, inline: true });
-            }
-
-            embed.setDescription(`Page ${page}/${Math.ceil(items.length / 25)}`);
-            embed.addFields(fields);
-        } else {
-            embed.setDescription(`You don't have any items.`);
-        }
+        const embed = new EmbedBuilder().setTitle(`${username.endsWith('s') ? (username += "'") : (username += "'s")}`)
+            .setDescription(sliced.map(item => `${item.amount}x ${item.name}`).join('\n'))
+            .setFooter({text: `Page ${page}/${Math.ceil(items.length / 25)}`})
+            .setColor('Random');
 
         return interaction.reply({ embeds: [embed] });
     },
