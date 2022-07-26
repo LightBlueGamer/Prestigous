@@ -50,8 +50,8 @@ export default {
 
             embed.addFields([
                 { name: 'Rarity', value: `${result.rarity.name}`, inline: true },
-                { name: 'Weight', value: `${result.weight}/${totalWeight} (${((result.weight/totalWeight)*100).toFixed(2)}%)`, inline: true },
-                { name: 'Obtained from', value: `${loottable.map(x => x.name).join('\n')}`, inline: true },
+                { name: 'Weight', value: `${result.weight > 0 ? `${result.weight}/${totalWeight} (${((result.weight/totalWeight)*100).toFixed(2)}%)` : 'Unobtainable'}`, inline: true },
+                { name: 'Obtained from', value: `${result.weight > 0 ? `${loottable.map(x => x.name).join('\n')}` : 'Unobtainable'}`, inline: true },
             ])
             .setFooter({
                 text: `There are currently ${totalItems} ${result.name}s in the game.`,

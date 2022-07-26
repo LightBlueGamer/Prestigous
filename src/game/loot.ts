@@ -43,3 +43,8 @@ export const dayExpBoost = new Loot('24h XP Boost', veryRare, 'Boosts your exper
 export const dayMoneyBoost = new Loot('24h Money Boost', veryRare, 'Boosts your money gain by 2x for 24 hours!', 'booster', 10000);
 export const weekExpBoost = new Loot('Week XP Boost', veryRare, 'Boosts your experience gain by 2x for 7 days!', 'booster', 3000);
 export const weekMoneyBoost = new Loot('Week Money Boost', veryRare, 'Boosts your money gain by 2x for 7 days!', 'booster', 4000);
+
+
+// Special
+
+export const maineCoon = new Loot('Maine Coon', mythic, 'A Maine Coon cat', 'pet', 0);
