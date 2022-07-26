@@ -146,7 +146,8 @@ export async function removeItem(key: string, item: Loot | BackpackItem | Lootbo
 
 export async function hasItem(key: string, item: string | Loot | BackpackItem | Lootbox) {
     const inventory = await getInventory(key);
-    return inventory.some((v) => v.name === item)
+    if(typeof item === 'string') return inventory.some((v) => v.name === item);
+    else return inventory.some((v) => v.name === item.name);
 }
 
 export async function getItem(key: string, item: string | Loot | BackpackItem | Lootbox) {

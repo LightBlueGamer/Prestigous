@@ -18,8 +18,8 @@ export default {
     .toJSON(),
     async execute(interaction: CommandInteraction) {
         const { user } = interaction;
-        const toOpen = interaction.options.get("lootbox")?.value;
-        const box = (Object.entries(lootboxes)).find((_v, i, o) => o[i][0] === toOpen)?.[1]!;
+        const toOpen = interaction.options.get("lootbox")?.value?.toString()!;
+        const box = (Object.entries(lootboxes)).find((_v, i, o) => o[i][1].name === toOpen)?.[1]!;
         const loot = box.loottable.getLoot();
         if(await hasItem(user.id, box)) await removeItem(user.id, box);
         else {
