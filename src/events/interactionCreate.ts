@@ -3,6 +3,7 @@ import { commands } from '../index.js';
 import { getInventory, hasProfile, initProfile } from '../database/functions.js';
 import { AutocompleteInteraction, CommandInteraction, InteractionType } from 'discord.js';
 import type { Command } from '../game/classes/Command.js';
+import * as boxes from '../game/lootboxes.js';
 
 export default {
     name: 'interactionCreate',
@@ -12,9 +13,12 @@ export default {
         if (interaction.type === InteractionType.ApplicationCommandAutocomplete) {
             const focusedValue = interaction.options.getFocused();
             const inventory = await getInventory(interaction.user.id);
+            const lootboxes = Object.entries(boxes).map((_v, i, o) => o[i][1]);
             let choices;
-            if(interaction.commandName === 'use') choices = inventory.map(x => x.name);
+            const useTypes = ['booster'];
+            if(interaction.commandName === 'use') choices = inventory.filter(x => useTypes.includes(x.type!)).map(x => x.name);
             if(interaction.commandName === 'open') choices = inventory.filter(x => x.type === 'lootbox').map(x => x.name);
+            if(interaction.commandName === 'shop') choices = lootboxes.map(x => `1x ${x.name} $${x.price}`);
 
             const filtered = choices?.filter(choice => choice.startsWith(focusedValue));
             await interaction.respond(filtered?.map(choice => ({ name: choice, value: choice }))!);

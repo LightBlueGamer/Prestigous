@@ -98,6 +98,10 @@ export async function addMoney(key: string, amount: number) {
     return profiles.math(`${key}.money`, '+', amount);
 }
 
+export async function removeMoney(key: string, amount: number) {
+    return profiles.math(`${key}.money`, '-', amount);
+}
+
 export async function canLevelUp(key: string) {
     const { level } = await getProfile(key);
     const xpNeeded = level * 500;

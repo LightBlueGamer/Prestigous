@@ -1,6 +1,6 @@
 import { EmbedBuilder, UserContextMenuCommandInteraction } from 'discord.js';
 import { client } from '..';
-import { getProfile } from '../database/functions';
+import { getProfile, hasBooster } from '../database/functions';
 
 export default {
     devCmd: false,
@@ -13,6 +13,8 @@ export default {
         const user = await client.users.fetch(interaction.targetId);
         const profile = await getProfile(user.id);
         const joined = Math.round(profile.joined.getTime() / 1000);
+        const xpBoost = await hasBooster(user.id, 'exp') ? `2x XP expires <t:${Math.round(profile.xpBoost.getTime() / 1000)}:R>` : "You don't have a active XP Boost.";
+        const moneyBoost = await hasBooster(user.id, 'money') ? `2x Money expires <t:${Math.round(profile.moneyBoost.getTime() / 1000)}:R>` : "You don't have a active Money Boost.";
         const embed = new EmbedBuilder()
             .setTitle(user.tag)
             .setDescription(
@@ -25,8 +27,8 @@ export default {
                 { name: 'Level', value: `${profile.level}`, inline: true },
                 { name: 'Experience', value: `${profile.xp}`, inline: true },
                 { name: 'Money', value: `${profile.money}`, inline: true },
-                { name: '\u200b', value: `\u200b`, inline: true },
                 { name: 'Prestigious Coins', value: `${profile.pCoins}`, inline: true },
+                { name: 'Boosters', value: `${xpBoost}\n${moneyBoost}`, inline: true },
             ])
             .setColor('Random');
 

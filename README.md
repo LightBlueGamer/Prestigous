@@ -2,6 +2,11 @@
 
 ## Release Notes
 
+### 2.5.0
+
+-   Added /shop command
+-   Fixed user context menu profile command
+
 ### 2.4.0
 
 -   Added 24 hour 2x XP boost
