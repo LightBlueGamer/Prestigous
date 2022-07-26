@@ -1,6 +1,5 @@
 import type { Message } from 'discord.js';
 import { addItem, addMoney, addXp, canLevelUp, getProfile, hasBooster, hasProfile, initProfile, levelUp } from '../database/functions.js';
-import { Item } from '../game/classes/Item.js';
 import { random } from '../modules/functions.js';
 
 const cooldown = new Set();
@@ -40,12 +39,12 @@ export default {
         }
 
         if (random(1, 1000) === 1) {
-            const { lootbox } = await import('../game/lootboxes');
-            const lootboxItem = new Item(lootbox.name, lootbox.rarity, lootbox.description, 'lootbox');
+            const { messageTable } = await import('../game/loottables.js');
+            const item = messageTable.getLoot();
             const ping = (await getProfile(key)).ping;
-            await addItem(key, lootboxItem);
+            await addItem(key, item);
             message.reply({
-                content: `You just got a lootbox! you can open it with the /open command!`,
+                content: `You just got a ${item}!`,
                 allowedMentions: {
                     repliedUser: ping,
                 },

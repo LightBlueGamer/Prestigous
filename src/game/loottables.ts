@@ -39,3 +39,7 @@ export const lootboxTable = new LootTable("Lootbox", [
     loot.weekExpBoost, 
     loot.weekMoneyBoost
 ]);
+
+export const messageTable = new LootTable("Messaging", [
+    loot.lootboxLoot
+])

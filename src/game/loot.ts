@@ -1,5 +1,6 @@
 import { Loot } from './classes/Loot';
 import { common, epic, legendary, mythic, rare, uncommon, veryRare } from './rarities';
+import { lootbox } from './lootboxes';
 
 export const dogLoot = new Loot('Dog', common, 'A dog', 'pet', 75000);
 export const catLoot = new Loot('Cat', common, 'A cat', 'pet', 75000);
@@ -37,6 +38,7 @@ export const phoenixLoot = new Loot('Phoenix', mythic, 'A phoenix', 'pet', 10);
 export const wyvernLoot = new Loot('Wyvern', mythic, 'A wyvern', 'pet', 10);
 
 export const animalCrateLoot = new Loot('Animal Crate', veryRare, 'A crate containing a random animal', 'lootbox', 9000);
+export const lootboxLoot = new Loot(lootbox.name, lootbox.rarity, lootbox.description, 'lootbox', 15000);
 
 export const dayExpBoost = new Loot('24h XP Boost', veryRare, 'Boosts your experience gain by 2x for 24 hours!', 'booster', 9000);
 export const dayMoneyBoost = new Loot('24h Money Boost', veryRare, 'Boosts your money gain by 2x for 24 hours!', 'booster', 10000);
