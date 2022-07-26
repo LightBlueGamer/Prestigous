@@ -1,4 +1,5 @@
 import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { getTotalItems } from "../database/functions";
 import type { Loot } from "../game/classes/Loot";
 import type { Lootbox } from "../game/classes/Lootbox";
 import * as lootItems from "../game/loot.js";
@@ -45,11 +46,16 @@ export default {
                 if(loottable.some(x => x.loot.some((y) => y.name === lootItem.name))) totalWeight += lootItem.weight;
             }
 
+            const totalItems = await getTotalItems(result)
+
             embed.addFields([
                 { name: 'Rarity', value: `${result.rarity.name}`, inline: true },
                 { name: 'Weight', value: `${result.weight}/${totalWeight} (${((result.weight/totalWeight)*100).toFixed(2)}%)`, inline: true },
                 { name: 'Obtained from', value: `${loottable.map(x => x.name).join('\n')}`, inline: true },
-            ]);
+            ])
+            .setFooter({
+                text: `There are currently ${totalItems} ${result.name}s in the game.`,
+            })
         }
 
         embed.setTitle(`${result.name}`)

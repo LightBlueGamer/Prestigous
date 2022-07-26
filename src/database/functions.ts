@@ -64,7 +64,7 @@ export async function getLeaders(page: number, users: User[]) {
     const sorted = users.sort((a, b) => b.prestige - a.prestige || b.level - a.level || b.xp - a.xp)
     const sliced = sorted.slice((page - 1) * 10, (page - 1) * 10 + 10);
     const fields: APIEmbedField[] = [];
-    
+
     for(let i = 0; i < sliced.length; i++) {
         const ind = sliced[i]
         if(i & 1) {
@@ -248,4 +248,15 @@ export async function useItem(key: string, item: BackpackItem) {
 
     return string;
     
+}
+
+export async function getTotalItems(item: Item) {
+    const items: number[] = [];
+    const keys = await profiles.keys;
+    for(const key of keys) {
+        const inventory = await getInventory(key);
+        items.push(...inventory.filter((i) => i.name === item.name).map((i) => i.amount));
+    }
+
+    return items.reduce((a, b) => a + b, 0);
 }
