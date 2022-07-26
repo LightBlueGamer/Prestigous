@@ -14,7 +14,7 @@ export default {
     async execute(interaction: CommandInteraction) {
         const user = interaction.user;
         const item = interaction.options.get('item')?.value?.toString()!;
-        const box = (Object.entries(lootboxes)).find((_v, i, o) => o[i][1].name.replace(/\s/gim, '') === item.replace(/\d+x|\$\d+|\s/gim, ''))?.[1]!;
+        const box = (Object.values(lootboxes)).find((v) => v.name.replace(/\s/gim, '') === item.replace(/\d+x|\$\d+|\s/gim, ''))!;
         const profile = await getProfile(user.id);
 
         if(profile.money < box.price) {

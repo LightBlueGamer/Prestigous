@@ -5,6 +5,7 @@ import type { BackpackItem } from '../game/classes/BackpackItem.js';
 import { Item } from '../game/classes/Item.js';
 import { addItem, addMoney, addXp } from '../database/functions.js';
 import { client } from '../index.js';
+import { profiles } from '../database/base.js';
 
 export function permlevel(interaction: CommandInteraction | Message) {
     let permlvl = 0;
@@ -50,4 +51,16 @@ export async function voteReward(key: string, type: string) {
     }
 
     user.send(`You have voted and received 1 lootbox and ${xp} xp and $${money} money!`);
+}
+
+export async function dailyReward(key: string) {
+    const { lootbox } = await import('../game/lootboxes');
+    const lootboxItem = new Item(lootbox.name, lootbox.rarity, lootbox.description, 'lootbox');
+    const xp = random(500, 1500);
+    const money = random(1000, 2500);
+    await addItem(key, lootboxItem);
+    await addXp(key, xp);
+    await addMoney(key, money);
+    await profiles.set(`${key}.daily`, new Date(Date.now() + 24 * 60 * 60 * 1000));
+    return { xp, money };
 }

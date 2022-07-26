@@ -1,8 +1,10 @@
 import type { Loot } from './Loot.js';
 
 export class LootTable {
+    name: string;
     loot: Loot[];
-    constructor(loot: Loot[]) {
+    constructor(name: string, loot: Loot[]) {
+        this.name = name;
         this.loot = loot;
     }
 

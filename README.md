@@ -2,6 +2,13 @@
 
 ## Release Notes
 
+### 2.6.0
+
+-   Added a /search command that shows information about a lootbox or item
+-   Added a /daily command that you can use once every 24h to get money, xp and a lootbox
+-   Leaderboard command is slightly more efficient
+-   Booster usage is slightly more efficient
+
 ### 2.5.0
 
 -   Added /shop command

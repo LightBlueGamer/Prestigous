@@ -1,7 +1,7 @@
 import { LootTable } from './classes/LootTable';
 import * as loot from './loot';
 
-export const animalTable = new LootTable([
+export const animalTable = new LootTable("Animal Crate", [
     loot.dogLoot,
     loot.catLoot,
     loot.bunnyLoot,
@@ -32,7 +32,7 @@ export const animalTable = new LootTable([
     loot.wyvernLoot,
 ]);
 
-export const lootboxTable = new LootTable([
+export const lootboxTable = new LootTable("Lootbox", [
     loot.animalCrateLoot, 
     loot.dayExpBoost, 
     loot.dayMoneyBoost, 

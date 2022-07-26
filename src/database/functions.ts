@@ -64,9 +64,10 @@ export async function getLeaders(page: number, users: User[]) {
     const sorted = users.sort((a, b) => b.prestige - a.prestige || b.level - a.level || b.xp - a.xp)
     const sliced = sorted.slice((page - 1) * 10, (page - 1) * 10 + 10);
     const fields: APIEmbedField[] = [];
+    
     for(let i = 0; i < sliced.length; i++) {
         const ind = sliced[i]
-        if(i % 2) {
+        if(i & 1) {
             fields.push({
                 name: `\u200b`,
                 value: `\u200b`,
@@ -175,12 +176,12 @@ export async function addBooster(key: string, booster: Booster) {
         case true:
             switch (booster.type) {
                 case 'exp':
-                    await profiles.set(`${key}.xpBoost`, new Date(new Date(xpDate).setDate(profile.xpBoost.getDate() + booster.days)));
+                    await profiles.set(`${key}.xpBoost`, new Date(xpDate + (24 * booster.days) * 60 * 60 * 1000));
                     string = `XP booster extended for ${booster.days * 24} hours!`;
                     break;
 
                 case 'money':
-                    await profiles.set(`${key}.moneyBoost`, new Date(new Date(moneyDate).setDate(profile.moneyBoost.getDate() + booster.days)));
+                    await profiles.set(`${key}.moneyBoost`, new Date(moneyDate + (24 * booster.days) * 60 * 60 * 1000));
                     string = `Money booster extended for ${booster.days * 24} hours!`;
                     break;
             
@@ -194,12 +195,12 @@ export async function addBooster(key: string, booster: Booster) {
         default:
             switch (booster.type) {
                 case 'exp':
-                    await profiles.set(`${key}.xpBoost`, new Date(new Date().setDate(new Date().getDate() + booster.days)));
+                    await profiles.set(`${key}.xpBoost`, new Date(Date.now() + (24 * booster.days) * 60 * 60 * 1000));
                     string = `XP booster activated for ${booster.days * 24} hours!`;
                     break;
 
                 case 'money':
-                    await profiles.set(`${key}.moneyBoost`, new Date(new Date().setDate(new Date().getDate() + booster.days)));
+                    await profiles.set(`${key}.moneyBoost`, new Date(Date.now() + (24 * booster.days) * 60 * 60 * 1000));
                     string = `Money booster activated for ${booster.days * 24} hours!`;
                     break;
                 
@@ -229,7 +230,7 @@ export async function hasBooster(key: string, type: string) {
 }
 
 export async function getBooster(name: string) {
-    return (Object.entries(boosters)).find((_v, i, o) => o[i][1].name === name)?.[1]!;
+    return (Object.values(boosters)).find((v) => v.name === name)!;
 } 
 
 export async function useItem(key: string, item: BackpackItem) {
