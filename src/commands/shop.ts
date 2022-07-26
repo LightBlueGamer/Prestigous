@@ -1,5 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { addItem, getProfile, removeMoney } from "../database/functions.js";
+import { Item } from "../game/classes/Item.js";
 import * as lootboxes from '../game/lootboxes.js';
 
 export default {
@@ -25,7 +26,9 @@ export default {
             });
         }
 
-        await addItem(user.id, box);
+        const toAdd = new Item(box.name, box.rarity, box.description, 'lootbox');
+
+        await addItem(user.id, toAdd);
         await removeMoney(user.id, box.price);
 
         return interaction.reply({
