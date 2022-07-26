@@ -47,4 +47,4 @@ export const weekMoneyBoost = new Loot('Week Money Boost', veryRare, 'Boosts you
 
 // Special
 
-export const maineCoon = new Loot('Maine Coon', mythic, 'A Maine Coon cat', 'pet', 0);
+export const maineCoon = new Loot('Maine Coon Cat', mythic, 'A Maine Coon cat', 'pet', 0);
