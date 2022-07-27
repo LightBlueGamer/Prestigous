@@ -1,4 +1,4 @@
-import { profiles } from './base.js';
+import { configuration, profiles } from './base.js';
 import { client } from '../index.js';
 import type { Profile } from '../game/classes/Profile.js';
 import type { User } from '../game/classes/User.js';
@@ -9,6 +9,8 @@ import type { Loot } from '../game/classes/Loot.js';
 import type { Lootbox } from '../game/classes/Lootbox.js';
 import type { Booster } from '../game/classes/Booster.js';
 import * as boosters from '../game/boosters.js';
+import * as tokens from '../game/tokens.js';
+import type { Token } from '../game/classes/Token.js';
 
 export async function initProfile(key: string) {
     return profiles.set(key, {
@@ -126,14 +128,14 @@ export async function prestige(key: string) {
     return profiles.inc(`${key}.prestige`);
 }
 
-export async function addItem(key: string, item: Item) {
+export async function addItem(key: string, item: Item, amount: number = 1) {
     const inventory = await getInventory(key);
     const invItem = inventory.find((i) => i.name === item.name)!;
     const itemIndex = inventory.indexOf(invItem);
     if (invItem) {
-        await profiles.inc(`${key}.inventory[${itemIndex}].amount`);
+        await profiles.math(`${key}.inventory[${itemIndex}].amount`, '+', amount);
     } else {
-        const newItem = new BackpackItem(item.name, item.rarity, item.description, 1, item.type);
+        const newItem = new BackpackItem(item.name, item.rarity, item.description, amount, item.type);
         await profiles.push(`${key}.inventory`, newItem, false);
     }
 }
@@ -231,7 +233,11 @@ export async function hasBooster(key: string, type: string) {
 
 export async function getBooster(name: string) {
     return (Object.values(boosters)).find((v) => v.name === name)!;
-} 
+}
+
+export async function getToken(name: string) {
+    return (Object.values(tokens)).find((v) => v.name === name)!;
+}
 
 export async function useItem(key: string, item: BackpackItem) {
     let string;
@@ -239,6 +245,11 @@ export async function useItem(key: string, item: BackpackItem) {
         case 'booster':
             const booster = await getBooster(item.name);
             string = await addBooster(key, booster);
+            break;
+
+        case 'token':
+            const token = await getToken(item.name);
+            string = await useToken(key, token);
             break;
     
         default:
@@ -259,4 +270,30 @@ export async function getTotalItems(item: Item) {
     }
 
     return items.reduce((a, b) => a + b, 0);
+}
+
+export async function useToken(key: string, token: Token) {
+    profiles.math(`${key}.level`, '+', token.amount);
+    return `You used a level token and gained ${token.amount} levels! Your now at level ${(await getProfile(key)).level}.`;
+}
+
+export async function initConfig(key: string) {
+    return configuration.set(key, {
+        levelMessages: "current",
+        randomRewards: "current",
+    })
+}
+
+export async function getGuildConfig(key: string) {
+    return configuration.get(key);
+}
+
+export async function setGuildConfig(key: string, channel: string, type: string) {
+    if(type === 'level') {
+        return configuration.set(`${key}.levelMessages`, channel);
+    } else if(type === 'reward') {
+        return configuration.set(`${key}.randomRewards`, channel);
+    } else {
+        return 'Invalid config type!';
+    }
 }

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { getLeaders, getUsers } from '../database/functions.js';
 
 export default {
@@ -9,11 +9,11 @@ export default {
         .setDescription('Checks the season leaderboard.')
         .addNumberOption((option) => option.setName('page').setDescription('Page to go to'))
         .toJSON(),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: ChatInputCommandInteraction) {
         await interaction.deferReply()
         const { user } = interaction;
         const users = await getUsers(user.id);
-        const pgNum = interaction.options.get('page')?.value;
+        const pgNum = interaction.options.getNumber('page')!;
         let page = typeof pgNum === 'number' ? pgNum : 1;
         if (page * 10 > users.length) page = Math.ceil(users.length / 10);
         if (page <= 0) page = 1;

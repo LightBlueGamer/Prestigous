@@ -1,11 +1,14 @@
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import prettyMilliseconds from 'pretty-ms';
 
 export default {
     devCmd: false,
     permLevel: 0,
-    data: new SlashCommandBuilder().setName('ping').setDescription('Checks bot ping.').toJSON(),
-    async execute(interaction: CommandInteraction) {
+    data: new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('Checks bot ping.')
+        .toJSON(),
+    async execute(interaction: ChatInputCommandInteraction) {
         const action = await interaction.reply({
             content: `Pinging...`,
             fetchReply: true,

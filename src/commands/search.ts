@@ -1,4 +1,4 @@
-import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { getTotalItems } from "../database/functions";
 import type { Loot } from "../game/classes/Loot";
 import type { Lootbox } from "../game/classes/Lootbox";
@@ -25,9 +25,9 @@ export default {
             .setAutocomplete(true)
         )
         .toJSON(),
-    async execute(interaction: CommandInteraction) {
-        const type = interaction.options.get('type')?.value?.toString()!;
-        const query = interaction.options.get('query')?.value?.toString()!;
+    async execute(interaction: ChatInputCommandInteraction) {
+        const type = interaction.options.getString('type')!;
+        const query = interaction.options.getString('query')!;
         let result: Lootbox | Loot;
         const embed = new EmbedBuilder();
 
@@ -50,11 +50,11 @@ export default {
 
             embed.addFields([
                 { name: 'Rarity', value: `${result.rarity.name}`, inline: true },
-                { name: 'Weight', value: `${result.weight > 0 ? `${result.weight}/${totalWeight} (${((result.weight/totalWeight)*100).toFixed(2)}%)` : 'Unobtainable'}`, inline: true },
+                { name: 'Chance', value: `${result.weight > 0 ? `${result.weight/result.weight} in ${Math.round(totalWeight/result.weight)}` : 'Unobtainable'}`, inline: true },
                 { name: 'Obtained from', value: `${result.weight > 0 ? `${loottable.map(x => x.name).join('\n')}` : 'Unobtainable'}`, inline: true },
             ])
             .setFooter({
-                text: `There are currently ${totalItems} ${result.name}s in the game.`,
+                text: `There are currently ${totalItems} **${result.name}s** in the game.`,
             })
         }
 

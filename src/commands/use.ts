@@ -1,5 +1,5 @@
-import { SlashCommandBuilder, CommandInteraction } from 'discord.js';
-import { getItem, hasItem, removeItem, useItem } from '../database/functions';
+import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
+import { getItem, getProfile, hasItem, removeItem, useItem } from '../database/functions';
 
 export default {
     devCmd: false,
@@ -9,9 +9,9 @@ export default {
         .setDescription('Use a item in your inventory.')
         .addStringOption((option) => option.setName('item').setDescription('Item to use.').setRequired(true).setAutocomplete(true))
         .toJSON(),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: ChatInputCommandInteraction) {
         const user = interaction.user;
-        const item = interaction.options.get('item')?.value?.toString()!;
+        const item = interaction.options.getString('item')!;
 
         if(!hasItem(user.id, item)) {
             return interaction.reply({
@@ -21,8 +21,12 @@ export default {
             const bpItem = await getItem(user.id, item);
             const content = await useItem(user.id, bpItem);
             await removeItem(user.id, bpItem);
+            const ping = (await getProfile(user.id)).ping;
             return interaction.reply({
                 content,
+                allowedMentions: {
+                    repliedUser: ping,
+                },
             });
         }
     }

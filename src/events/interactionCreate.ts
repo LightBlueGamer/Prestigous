@@ -1,7 +1,7 @@
 import { permlevel } from '../modules/functions.js';
 import { commands } from '../index.js';
 import { getInventory, hasProfile, initProfile } from '../database/functions.js';
-import { AutocompleteInteraction, CommandInteraction, InteractionType } from 'discord.js';
+import { AutocompleteInteraction, ChannelType, CommandInteraction, InteractionType } from 'discord.js';
 import type { Command } from '../game/classes/Command.js';
 import * as boxes from '../game/lootboxes.js';
 import * as lootItems from '../game/loot.js';
@@ -14,20 +14,27 @@ export default {
         if (interaction.type === InteractionType.ApplicationCommandAutocomplete) {
             const focusedValue = interaction.options.getFocused();
             const inventory = await getInventory(interaction.user.id);
-            const lootboxes = Object.entries(boxes).map((_v, i, o) => o[i][1]);
-            const loots = Object.entries(lootItems).map((_v, i, o) => o[i][1]);
+            const lootboxes = Object.values(boxes);
+            const loots = Object.values(lootItems);
             let choices;
-            const useTypes = ['booster'];
+            const useTypes = ['booster', 'token'];
             if(interaction.commandName === 'use') choices = inventory.filter(x => useTypes.includes(x.type!)).map(x => x.name);
             if(interaction.commandName === 'open') choices = inventory.filter(x => x.type === 'lootbox').map(x => x.name);
             if(interaction.commandName === 'shop') choices = lootboxes.map(x => `1x ${x.name} $${x.price}`);
             if(interaction.commandName === 'search') {
-                const type = interaction.options.get('type')?.value?.toString()!;
+                const type = interaction.options.getString('type')!;
                 if(type === 'lootbox') choices = lootboxes.map(x => x.name);
                 else choices = loots.map(x => x.name);
             }
 
-            const filtered = choices?.filter(choice => choice.startsWith(focusedValue)).slice(0, 25);
+            if(interaction.commandName === 'configuration') {
+                choices = interaction.guild?.channels.cache.filter(x => x.type === ChannelType.GuildText).map(x => ({name: x.name, value: x.id}));
+                choices!.push({name: 'Current', value: 'current'});
+                const filtered = choices?.filter(choice => choice.name.toLowerCase().startsWith(focusedValue.toLowerCase())).slice(0, 25);
+                return await interaction.respond(filtered?.map(choice => ({ name: choice.name, value: choice.value }))!);
+            }
+
+            const filtered = choices?.filter(choice => choice.toLowerCase().startsWith(focusedValue.toLowerCase())).slice(0, 25);
             await interaction.respond(filtered?.map(choice => ({ name: choice, value: choice }))!);
         }
 

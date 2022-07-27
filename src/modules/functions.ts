@@ -1,9 +1,9 @@
 import { config } from '../../config.js';
 import sortArray from 'sort-array';
-import type { CommandInteraction, Message } from 'discord.js';
+import { ChannelType, ChatInputCommandInteraction, CommandInteraction, Message } from 'discord.js';
 import type { BackpackItem } from '../game/classes/BackpackItem.js';
 import { Item } from '../game/classes/Item.js';
-import { addItem, addMoney, addXp } from '../database/functions.js';
+import { addItem, addMoney, addXp, getGuildConfig, getProfile } from '../database/functions.js';
 import { client } from '../index.js';
 import { profiles } from '../database/base.js';
 
@@ -63,4 +63,50 @@ export async function dailyReward(key: string) {
     await addMoney(key, money);
     await profiles.set(`${key}.daily`, new Date(Date.now() + 24 * 60 * 60 * 1000));
     return { xp, money };
+}
+
+export async function send(content: string, interaction: ChatInputCommandInteraction | Message, type: string) {
+    const ping = (await getProfile(interaction?.member?.user.id!)).ping;
+    let config: string;
+    switch (type) {
+        case 'level':
+            config = (await getGuildConfig(interaction?.guild?.id!)).levelMessages;
+            break;
+    
+        case 'reward': 
+            config = (await getGuildConfig(interaction?.guild?.id!)).randomRewards;
+            break;
+
+        default:
+            config = "current"
+            break;
+    }
+
+    if(config === 'current') {
+        return interaction.reply({
+            content,
+            allowedMentions: {
+                repliedUser: ping,
+            },
+        })
+    } else {
+        const channel = interaction.client.channels.cache.get(config)!;
+        const user = await interaction.client.users.fetch(interaction?.member?.user.id!);
+        const pingUser = ping ? [user.id] : [];
+        if(channel.type === ChannelType.GuildText) {
+            return channel.send({
+                content: `<@${user.id}> you ${content.slice(4, content.length)}`,
+                allowedMentions: {
+                    users: pingUser,
+                },
+            })
+        } else {
+            return user.send({
+                content: `<@${user.id}> you ${content.slice(4, content.length)}`,
+                allowedMentions: {
+                    users: pingUser,
+                },
+            }).catch(err => console.error(err));
+        }
+    }
 }

@@ -2,6 +2,15 @@
 
 ## Release Notes
 
+### 2.7.0
+
+-   Added 6 new boosters
+-   Added Level Up Tokens (grants you a free level up)
+-   Added lots of new animals & creatures
+-   /shop command now takes a amount input
+-   /search {item} command now displays chance instead of weight
+-   Added a /config command for server admins to set a notification channel for level ups and random rewards
+
 ### 2.6.0
 
 -   Added a /search command that shows information about a lootbox or item

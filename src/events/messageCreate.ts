@@ -1,6 +1,6 @@
 import type { Message } from 'discord.js';
 import { addItem, addMoney, addXp, canLevelUp, getProfile, hasBooster, hasProfile, initProfile, levelUp } from '../database/functions.js';
-import { random } from '../modules/functions.js';
+import { random, send } from '../modules/functions.js';
 
 const cooldown = new Set();
 const globalBoosters = {
@@ -29,26 +29,14 @@ export default {
 
         if ((await canLevelUp(key)).hasEnoughXp) {
             await levelUp(key);
-            const ping = (await getProfile(key)).ping;
-            message.reply({
-                content: `You have leveled up to level ${(await getProfile(key)).level}!`,
-                allowedMentions: {
-                    repliedUser: ping,
-                },
-            });
+            send(`You have leveled up to level ${(await getProfile(key)).level}!`, message, 'level');
         }
 
         if (random(1, 1000) === 1) {
             const { messageTable } = await import('../game/loottables.js');
             const item = messageTable.getLoot();
-            const ping = (await getProfile(key)).ping;
             await addItem(key, item);
-            message.reply({
-                content: `You just got a ${item}!`,
-                allowedMentions: {
-                    repliedUser: ping,
-                },
-            });
+            send(`You just got a ${item.name}!`, message, 'reward');
         }
     },
 };

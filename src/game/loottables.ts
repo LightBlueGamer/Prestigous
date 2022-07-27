@@ -1,45 +1,31 @@
 import { LootTable } from './classes/LootTable';
 import * as loot from './loot';
 
-export const animalTable = new LootTable("Animal Crate", [
-    loot.dogLoot,
-    loot.catLoot,
-    loot.bunnyLoot,
-    loot.goldFishLoot,
-    loot.hamsterLoot,
-    loot.ratLoot,
-    loot.mouseLoot,
-    loot.parrotLoot,
-    loot.foxLoot,
-    loot.wolfLoot,
-    loot.horseLoot,
-    loot.ponyLoot,
-    loot.bearLoot,
-    loot.lionLoot,
-    loot.tigerLoot,
-    loot.jaguarLoot,
-    loot.elephantLoot,
-    loot.rhinoLoot,
-    loot.giraffeLoot,
-    loot.cheetahLoot,
-    loot.salamanderLoot,
-    loot.zebraLoot,
-    loot.hippoLoot,
-    loot.crocodileLoot,
-    loot.unicornLoot,
-    loot.dragonLoot,
-    loot.phoenixLoot,
-    loot.wyvernLoot,
-]);
+export const animalTable = new LootTable("Animal Crate", Object.values(loot).filter((v) => v.type === 'pet').map(v => v));
 
 export const lootboxTable = new LootTable("Lootbox", [
     loot.animalCrateLoot, 
-    loot.dayExpBoost, 
-    loot.dayMoneyBoost, 
-    loot.weekExpBoost, 
-    loot.weekMoneyBoost
+    loot.threeHourExpBoost, 
+    loot.threeHourMoneyBoost, 
+    loot.quarterDayExpBoost, 
+    loot.quarterDayExpBoost,
+    loot.boostBox,
 ]);
 
 export const messageTable = new LootTable("Messaging", [
-    loot.lootboxLoot
-])
+    loot.lootboxLoot,
+]);
+
+export const boosterTable = new LootTable("Boosters", [
+    loot.threeHourExpBoost,
+    loot.threeHourMoneyBoost,
+    loot.quarterDayExpBoost,
+    loot.quarterDayMoneyBoost,
+    loot.halfDayExpBoost,
+    loot.halfDayMoneyBoost,
+    loot.dayExpBoost,
+    loot.dayMoneyBoost,
+    loot.weekExpBoost,
+    loot.weekMoneyBoost,
+    loot.levelToken,
+]);

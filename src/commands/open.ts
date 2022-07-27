@@ -1,4 +1,4 @@
-import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import { addItem, hasItem, removeItem } from '../database/functions.js';
 import * as lootboxes from '../game/lootboxes.js';
 
@@ -16,9 +16,9 @@ export default {
     .setAutocomplete(true)
     )
     .toJSON(),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: ChatInputCommandInteraction) {
         const { user } = interaction;
-        const toOpen = interaction.options.get("lootbox")?.value?.toString()!;
+        const toOpen = interaction.options.getString("lootbox")!;
         const box = (Object.values(lootboxes)).find((v) => v.name === toOpen)!;
         const loot = box.loottable.getLoot();
         if(await hasItem(user.id, box)) await removeItem(user.id, box);

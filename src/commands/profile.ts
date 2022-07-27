@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, EmbedBuilder, CommandInteraction } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { getProfile, hasBooster } from '../database/functions.js';
 
 export default {
@@ -9,7 +9,7 @@ export default {
         .setDescription('Checks a users profile.')
         .addUserOption((option) => option.setName('user').setDescription('The user to show profile of.'))
         .toJSON(),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: ChatInputCommandInteraction) {
         const user = interaction.options.getUser('user') || interaction.user;
         const profile = await getProfile(user.id);
         const joined = Math.round(profile.joined.getTime() / 1000);
