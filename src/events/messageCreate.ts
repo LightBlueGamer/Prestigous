@@ -1,5 +1,6 @@
 import type { Message } from 'discord.js';
 import { addItem, addMoney, addXp, canLevelUp, getProfile, hasBooster, hasProfile, initProfile, levelUp } from '../database/functions.js';
+import { Item } from '../game/classes/Item.js';
 import { random, send } from '../modules/functions.js';
 
 const cooldown = new Set();
@@ -31,7 +32,8 @@ export default {
             await levelUp(key);
             if((await getProfile(key)).level % 5 === 0) {
                 const { lootbox } = await import('../game/lootboxes');
-                await addItem(key, lootbox);
+                const item = new Item(lootbox.name, lootbox.rarity, lootbox.description, 'lootbox');
+                await addItem(key, item);
                 return send(`You have leveled up to level ${(await getProfile(key)).level} and got a lootbox!`, message, 'level');
             } else {
                 return send(`You have leveled up to level ${(await getProfile(key)).level}!`, message, 'level');
