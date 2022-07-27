@@ -78,13 +78,13 @@ export async function getLeaders(page: number, users: User[]) {
 
             fields.push({
                 name: `${sorted.indexOf(ind)+1}. ${ind.tag}`,
-                value: `Level: ${ind.level} Prestige: ${ind.prestige} XP: ${ind.xp}`,
+                value: `Prestige: ${ind.prestige} Level: ${ind.level}  XP: ${ind.xp}`,
                 inline: true,
             });
         } else {
             fields.push({
                 name: `${sorted.indexOf(ind)+1}. ${ind.tag}`,
-                value: `Level: ${ind.level} Prestige: ${ind.prestige} XP: ${ind.xp}`,
+                value: `Prestige: ${ind.prestige} Level: ${ind.level} XP: ${ind.xp}`,
                 inline: true,
             });
         }
