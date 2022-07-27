@@ -1,5 +1,5 @@
 import { Pet } from './classes/Pet.js';
-import { common, epic, legendary, mythic, rare, uncommon, veryRare } from './rarities.js';
+import { common, epic, legendary, mythic, rare, uncommon, unique, veryRare } from './rarities.js';
 
 export const dog = new Pet('Dog', common, 75000);
 export const cat = new Pet('Cat', common, 75000);
@@ -65,5 +65,5 @@ export const centaur = new Pet('Centaur', mythic, 10);
 export const golem = new Pet('Golem', mythic, 10);
 export const cyclops = new Pet('Cyclops', mythic, 10);
 
-
-export const maineCoon = new Pet('Maine Coon', mythic, 0);
+export const maineCoon = new Pet('Maine Coon', unique, 0);
+export const toller = new Pet("Toller", unique, 0);

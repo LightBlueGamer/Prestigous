@@ -1,6 +1,6 @@
 import { randomWeight } from '../modules/functions';
 import { Loot } from './classes/Loot';
-import { common, epic, legendary, mythic, rare, uncommon, veryRare } from './rarities';
+import { common, epic, legendary, mythic, rare, uncommon, unique, veryRare } from './rarities';
 
 export const dogLoot = new Loot('Dog', common, 'A dog', 'pet', randomWeight(common));
 export const catLoot = new Loot('Cat', common, 'A cat', 'pet', randomWeight(common));
@@ -64,7 +64,8 @@ export const centaurLoot = new Loot('Centaur', mythic, 'A centaur', 'pet', rando
 export const golemLoot = new Loot('Golem', mythic, 'A golem', 'pet', randomWeight(mythic));
 export const cyclopsLoot = new Loot('Cyclops', mythic, 'A cyclops', 'pet', randomWeight(mythic));
 
-export const maineCoon = new Loot('Maine Coon Cat', mythic, 'A Maine Coon cat', 'pet', 0);
+export const maineCoon = new Loot('Maine Coon Cat', unique, 'A Maine Coon cat', 'pet', 0);
+export const tollerLoot = new Loot('Toller', unique, 'A toller dog', 'pet', 0);
 
 export const animalCrateLoot = new Loot('Animal Crate', veryRare, 'A crate containing a random animal.', 'lootbox', 22500);
 export const lootboxLoot = new Loot('Lootbox', uncommon, 'A lootbox containing random loot.', 'lootbox', 15000);
