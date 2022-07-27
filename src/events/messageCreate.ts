@@ -4,8 +4,8 @@ import { random, send } from '../modules/functions.js';
 
 const cooldown = new Set();
 const globalBoosters = {
-    xp: 1,
-    money: 1,
+    xp: 2,
+    money: 2,
 };
 
 export default {
