@@ -50,15 +50,16 @@ export async function getUsers(id: string) {
 
     for (const key of keys) {
         const profile = await getProfile(key);
-        if(profile.tag === undefined) break;
         const tag = key === id ? `${profile.tag} (you)` : `${profile.tag}`;
 
-        users.push({
-            tag,
-            prestige: profile.prestige,
-            level: profile.level,
-            xp: profile.xp,
-        });
+        if(profile.tag !== undefined) {
+            users.push({
+                tag,
+                prestige: profile.prestige,
+                level: profile.level,
+                xp: profile.xp,
+            });
+        }
     }
 
     return users;
