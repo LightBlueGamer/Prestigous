@@ -1,6 +1,6 @@
 import { config } from '../../config.js';
 import sortArray from 'sort-array';
-import { ChannelType, ChatInputCommandInteraction, CommandInteraction, Message } from 'discord.js';
+import { ChannelType, ChatInputCommandInteraction, CommandInteraction, Message, PermissionResolvable, PermissionsBitField } from 'discord.js';
 import type { BackpackItem } from '../game/classes/BackpackItem.js';
 import { Item } from '../game/classes/Item.js';
 import { addItem, addMoney, addXp, getGuildConfig, getProfile } from '../database/functions.js';
@@ -109,4 +109,8 @@ export async function send(content: string, interaction: ChatInputCommandInterac
             }).catch(err => console.error(err));
         }
     }
+}
+
+export function hasPermission(permissions: PermissionsBitField, permission: PermissionResolvable) {
+    return permissions.has(permission);
 }
