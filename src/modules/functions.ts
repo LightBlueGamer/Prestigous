@@ -6,6 +6,7 @@ import { Item } from '../game/classes/Item.js';
 import { addItem, addMoney, addXp, getGuildConfig, getProfile } from '../database/functions.js';
 import { client } from '../index.js';
 import { profiles } from '../database/base.js';
+import type { Rarity } from '../game/classes/Rarity.js';
 
 export function permlevel(interaction: CommandInteraction | Message) {
     let permlvl = 0;
@@ -113,4 +114,43 @@ export async function send(content: string, interaction: ChatInputCommandInterac
 
 export function hasPermission(permissions: PermissionsBitField, permission: PermissionResolvable) {
     return permissions.has(permission);
+}
+
+export function randomWeight(rarity: Rarity) {
+    let value;
+    switch (rarity.name) {
+        case 'Common':
+            value = random(50000, 75000);
+            break;
+
+        case 'Uncommon':
+            value = random(15000, 20000);
+            break;
+
+        case 'Rare':
+            value = random(5000, 8000);
+            break;
+
+        case 'Very Rare':
+            value = random(2000, 3500);
+            break;
+
+        case 'Epic':
+            value = random(500, 1000);
+            break;
+
+        case 'Legendary':
+            value = random(50, 300);
+            break;
+
+        case 'Mythic':
+            value = random(1, 10);
+            break;
+
+        default:
+            value = random(1, 10);
+            break;
+    }
+
+    return value;
 }
