@@ -22,7 +22,7 @@ export default {
     async execute(interaction: ChatInputCommandInteraction) {
         const { guild, options, user } = interaction;
         const ping = (await getProfile(user.id)).ping;
-        if(!interaction.memberPermissions?.has(['Administrator'], true)) {
+        if(!interaction.memberPermissions?.has(['ManageGuild'], true)) {
             return interaction.reply({
                 content: `You don't have permission to use this command.`,
                 allowedMentions: {
