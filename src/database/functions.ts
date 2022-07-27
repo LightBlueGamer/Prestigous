@@ -50,6 +50,7 @@ export async function getUsers(id: string) {
 
     for (const key of keys) {
         const profile = await getProfile(key);
+        console.log(profile)
         const tag = key === id ? `${profile.tag} (you)` : `${profile.tag}`;
 
         users.push({
@@ -59,7 +60,7 @@ export async function getUsers(id: string) {
             xp: profile.xp,
         });
     }
-    
+
     console.log(users.slice(0, 10));
     return users;
 }
