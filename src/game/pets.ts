@@ -67,3 +67,6 @@ export const cyclops = new Pet('Cyclops', mythic, 10);
 
 export const maineCoon = new Pet('Maine Coon', unique, 0);
 export const toller = new Pet("Toller", unique, 0);
+export const tinyCalico = new Pet("Tiny Calico", unique, 0);
+export const foundingTitan = new Pet("Founding Titan", unique, 0);
+export const puck = new Pet("Puck", unique, 0);

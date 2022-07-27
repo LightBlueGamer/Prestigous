@@ -65,7 +65,10 @@ export const golemLoot = new Loot('Golem', mythic, 'A golem', 'pet', randomWeigh
 export const cyclopsLoot = new Loot('Cyclops', mythic, 'A cyclops', 'pet', randomWeight(mythic));
 
 export const maineCoon = new Loot('Maine Coon Cat', unique, 'A Maine Coon cat', 'pet', 0);
-export const tollerLoot = new Loot('Toller', unique, 'A toller dog', 'pet', 0);
+export const toller = new Loot('Toller Dog', unique, 'A Toller dog', 'pet', 0);
+export const tinyCalico = new Loot("Tiny Calico Cat", unique, 'A Tiny Calico cat', 'pet', 0);
+export const foundingTitan = new Loot("Founding Titan", unique, 'A Founding Titan', 'pet', 0);
+export const puck = new Loot("Puck Cat", unique, "A Puck Cat", 'pet', 0);
 
 export const animalCrateLoot = new Loot('Animal Crate', veryRare, 'A crate containing a random animal.', 'lootbox', 22500);
 export const lootboxLoot = new Loot('Lootbox', uncommon, 'A lootbox containing random loot.', 'lootbox', 15000);
