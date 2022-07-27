@@ -1,7 +1,7 @@
 import { permlevel } from '../modules/functions.js';
 import { commands } from '../index.js';
 import { getInventory, hasProfile, initProfile } from '../database/functions.js';
-import { AutocompleteInteraction, ChannelType, CommandInteraction, InteractionType } from 'discord.js';
+import { AutocompleteInteraction, CommandInteraction, InteractionType } from 'discord.js';
 import type { Command } from '../game/classes/Command.js';
 import * as boxes from '../game/lootboxes.js';
 import * as lootItems from '../game/loot.js';
@@ -28,7 +28,7 @@ export default {
             }
 
             if(interaction.commandName === 'configuration') {
-                choices = interaction.guild?.channels.cache.filter(x => x.type === ChannelType.GuildText).map(x => ({name: `${x.parent ? `${x.parent.name}/` : ''}${x.name}`, value: x.id}));
+                choices = interaction.guild?.channels.cache.filter(x => x.isTextBased()).map(x => ({name: `${x.parent ? `${x.parent.name}/` : ''}${x.name}`, value: x.id}));
                 choices!.push({name: 'Current', value: 'current'});
                 const filtered = choices?.filter(choice => choice.name.toLowerCase().startsWith(focusedValue.toLowerCase())).slice(0, 25);
                 return await interaction.respond(filtered?.map(choice => ({ name: choice.name, value: choice.value }))!);
