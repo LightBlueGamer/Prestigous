@@ -8,10 +8,11 @@ export default {
     data: new SlashCommandBuilder()
         .setName('inventory')
         .setDescription('Checks your inventory.')
+        .addUserOption((option) => option.setName('user').setDescription('The user to show profile of.'))
         .addNumberOption((option) => option.setName('page').setDescription('Page to go to'))
         .toJSON(),
     async execute(interaction: ChatInputCommandInteraction) {
-        const { user } = interaction;
+        const user = interaction.options.getUser('user') || interaction.user;
         const items = await getInventory(user.id);
         const sorted = sortRarity(items);
         const pgNum = interaction.options.getNumber('page')!;
