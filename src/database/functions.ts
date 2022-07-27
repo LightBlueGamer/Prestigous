@@ -59,14 +59,14 @@ export async function getUsers(id: string) {
             xp: profile.xp,
         });
     }
-
+    
+    console.log(users.slice(0, 10));
     return users;
 }
 
 export async function getLeaders(page: number, users: User[]) {
     const sorted = users.sort((a, b) => b.prestige - a.prestige || b.level - a.level || b.xp - a.xp)
     const sliced = sorted.slice((page - 1) * 10, (page - 1) * 10 + 10);
-    console.log(sliced)
     const fields: APIEmbedField[] = [];
 
     for(let i = 0; i < sliced.length; i++) {
