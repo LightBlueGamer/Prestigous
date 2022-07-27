@@ -54,7 +54,7 @@ export default {
                 { name: 'Obtained from', value: `${result.weight > 0 ? `${loottable.map(x => x.name).join('\n')}` : 'Unobtainable'}`, inline: true },
             ])
             .setFooter({
-                text: `There are currently ${totalItems} ${result.name}s in the game.`,
+                text: `There are currently ${totalItems} ${result.name}${result.name.endsWith('s') ? '' : 's'} in the game.`,
             })
         }
 
