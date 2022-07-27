@@ -30,7 +30,7 @@ export default {
             if(interaction.commandName === 'configuration') {
                 choices = interaction.guild?.channels.cache.filter(x => x.isTextBased()).map(x => ({name: `${x.parent ? `${x.parent.name}/` : ''}${x.name}`, value: x.id}));
                 choices!.push({name: 'Current', value: 'current'});
-                const filtered = choices?.filter(choice => choice.name.split('/')[1].toLowerCase().startsWith(focusedValue.toLowerCase())).slice(0, 25);
+                const filtered = choices?.filter(choice => choice.name.split('/').length > 1 ? choice.name.split('/')[1].startsWith(focusedValue.toLowerCase()) : choice.name.startsWith(focusedValue.toLowerCase())).slice(0, 25);
                 return await interaction.respond(filtered?.map(choice => ({ name: choice.name, value: choice.value }))!);
             }
 
