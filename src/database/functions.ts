@@ -13,7 +13,9 @@ import * as tokens from '../game/tokens.js';
 import type { Token } from '../game/classes/Token.js';
 
 export async function initProfile(key: string) {
+    const user = await client.users.fetch(key);
     return profiles.set(key, {
+        tag: user.tag,
         inventory: [],
         prestige: 0,
         level: 1,
@@ -48,8 +50,7 @@ export async function getUsers(id: string) {
 
     for (const key of keys) {
         const profile = await getProfile(key);
-        const user = await client.users.fetch(key);
-        const tag = user.id === id ? `${user.tag} (you)` : `${user.tag}`;
+        const tag = key === id ? `${profile.tag} (you)` : `${profile.tag}`;
 
         users.push({
             tag,

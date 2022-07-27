@@ -1,6 +1,7 @@
 import type { BackpackItem } from './BackpackItem.js';
 
 export class Profile {
+    tag: string;
     inventory: Profile.Inventory;
     prestige: number;
     level: number;
@@ -14,7 +15,8 @@ export class Profile {
     xpBoost: Date;
     moneyBoost: Date;
     ping: boolean
-    constructor(inventory: Profile.Inventory, prestige: number, level: number, xp: number, money: number, pCoins: number, joined: Date, daily: Date, badges: Profile.Badges, buddy: Profile.Buddy, xpBoost: Date, moneyBoost: Date, ping: boolean) {
+    constructor(tag: string, inventory: Profile.Inventory, prestige: number, level: number, xp: number, money: number, pCoins: number, joined: Date, daily: Date, badges: Profile.Badges, buddy: Profile.Buddy, xpBoost: Date, moneyBoost: Date, ping: boolean) {
+        this.tag = tag;
         this.inventory = inventory;
         this.prestige = prestige;
         this.level = level;
