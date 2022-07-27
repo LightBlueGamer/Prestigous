@@ -29,7 +29,13 @@ export default {
 
         if ((await canLevelUp(key)).hasEnoughXp) {
             await levelUp(key);
-            send(`You have leveled up to level ${(await getProfile(key)).level}!`, message, 'level');
+            if((await getProfile(key)).level % 5 === 0) {
+                const { lootbox } = await import('../game/lootboxes');
+                await addItem(key, lootbox);
+                return send(`You have leveled up to level ${(await getProfile(key)).level} and got a lootbox!`, message, 'level');
+            } else {
+                return send(`You have leveled up to level ${(await getProfile(key)).level}!`, message, 'level');
+            }
         }
 
         if (random(1, 1000) === 1) {
