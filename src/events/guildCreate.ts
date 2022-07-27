@@ -5,6 +5,6 @@ export default {
     name: 'guildCreate',
     once: false,
     async execute(guild: Guild) {
-        initConfig(guild.id);
+        await initConfig(guild.id);
     }
 }
