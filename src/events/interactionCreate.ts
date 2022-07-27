@@ -28,7 +28,7 @@ export default {
             }
 
             if(interaction.commandName === 'configuration') {
-                choices = interaction.guild?.channels.cache.filter(x => x.type === ChannelType.GuildText).map(x => ({name: x.name, value: x.id}));
+                choices = interaction.guild?.channels.cache.filter(x => x.type === ChannelType.GuildText).map(x => ({name: `${x.parent?.name}/${x.name}`, value: x.id}));
                 choices!.push({name: 'Current', value: 'current'});
                 const filtered = choices?.filter(choice => choice.name.toLowerCase().startsWith(focusedValue.toLowerCase())).slice(0, 25);
                 return await interaction.respond(filtered?.map(choice => ({ name: choice.name, value: choice.value }))!);
