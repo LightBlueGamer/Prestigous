@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, PermissionsBitField, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { getProfile, setGuildConfig } from "../database/functions";
 
 export default {
