@@ -2,6 +2,10 @@
 
 ## Release Notes
 
+### 2.8.0
+
+-   Added a weight fluctuation system for some loot that changes on a daily basis
+
 ### 2.7.0
 
 -   Added 6 new boosters
