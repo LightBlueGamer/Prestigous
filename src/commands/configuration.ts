@@ -1,6 +1,5 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, PermissionsBitField, SlashCommandBuilder } from "discord.js";
 import { getProfile, setGuildConfig } from "../database/functions";
-import { hasPermission } from "../modules/functions";
 
 export default {
     devCmd: false,
@@ -23,7 +22,7 @@ export default {
     async execute(interaction: ChatInputCommandInteraction) {
         const { guild, options, user } = interaction;
         const ping = (await getProfile(user.id)).ping;
-        if(hasPermission((await guild?.members.fetch(user.id))!.permissions, 'Administrator')) {
+        if(interaction.memberPermissions?.has(PermissionsBitField.Flags.Administrator)) {
             return interaction.reply({
                 content: `You don't have permission to use this command.`,
                 allowedMentions: {
